@@ -34,7 +34,7 @@ export async function register(name, email, password) {
 }
 
 
-export async function login(email, password) {
+export async function login(email, password) {  
 
     const usuario = {
         email,

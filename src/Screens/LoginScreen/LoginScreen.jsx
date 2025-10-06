@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetch from '../../Hooks/UseFetch'
 import useForm from '../../Hooks/UseForm'
 import { login } from '../../services/authService'
+import { useNavigate } from 'react-router-dom'
+import LOCAL_STORAGE_KEYS from '../../constants/localStorage'
 
 
 
 const LoginScreen = () => {
+
+  const navigate =useNavigate()
 
   const FORM_FIELDS =
   {
@@ -25,6 +29,19 @@ const LoginScreen = () => {
     sendRequest(() => login(form_state[FORM_FIELDS.EMAIL], form_state[FORM_FIELDS.PASSWORD]))
   }
 
+    
+  useEffect(
+    ()=>{
+      if(response && response.ok){
+        //Guardamos el token emitido por el backend
+        //para despues usarlo como credencial
+        //Local storage es una tabla con clave|valor
+        localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN,response.data.authorization_token)
+        navigate('/home')
+      }
+    },[response]
+  )
+
   const {
     form_state: register_form_state,
     handleSubmit,
@@ -36,6 +53,7 @@ const LoginScreen = () => {
     }
 
   )
+
 
   return (
     <div>
