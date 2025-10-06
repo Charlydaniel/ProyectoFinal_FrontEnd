@@ -8,7 +8,7 @@ export async function register(name, email, password) {
         name,
         password
     }
-
+    //COMITEO
     //FETCH Ordena al navegador a hacer una consulta http
     //Devuelve una promesa
     //Revcibe la URL de consulta y un objeto de configuracion de la consulta
