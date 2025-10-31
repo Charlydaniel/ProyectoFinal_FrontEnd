@@ -92,7 +92,8 @@ export default function LoguinComponent() {
             </header>
             <div className='body-login'>
                 <div className="login-title">
-                    <h1 >Escribe tu correo electrónico para conectarte</h1>
+                    <h1 className='--max-size'>Escribe tu correo electrónico para conectarte</h1>
+                    <h1 className='--litle-size'>Escribe tu correo para conectarte</h1>
                     <div className="login-subtitle">O selecciona otra forma de conectarte.</div>
                 </div>
                 <br />
@@ -113,11 +114,21 @@ export default function LoguinComponent() {
                         />    
                         {
                             !response
-                                ? <button 
-                                    className="login-button"
+                                ? 
+                                 <div>
+                                    <button 
+                                    className="login-button --max-size"
                                     type="submit" disabled={false}
                                     >Conectarse a travéz del correo electrónico
                                     </button>
+                                    <button 
+                                    className="login-button --litle-size"
+                                    type="submit" disabled={false}
+                                    >Continuar
+                                    </button>
+                                 </div>
+         
+                                    
                                 :
                                 <>
                                     <button 
@@ -153,7 +164,11 @@ export default function LoguinComponent() {
 
                         </div>
 
-                    <p className='footer-support'>¿Estás teniendo problemas? <a href="https://slack.com/workspace-signin">
+                    <p className='footer-support --max-size'>¿Estás teniendo problemas? <a href="https://slack.com/workspace-signin">
+                            Prueba con una URL del espacio de trabajo
+                        </a>
+                    </p>
+                    <p className='footer-support --litle-size'><a href="https://slack.com/workspace-signin">
                             Prueba con una URL del espacio de trabajo
                         </a>
                     </p>

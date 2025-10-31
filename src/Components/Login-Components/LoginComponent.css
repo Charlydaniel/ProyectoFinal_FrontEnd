@@ -13,6 +13,10 @@
     --common_border: 1px solid #ccc;
 }
 
+.--litle-size{
+  display: none;
+}
+
 input{
    outline: none; /* quita el borde azul predeterminado del navegador */
   transition: box-shadow 0.3s ease, border 0.3s ease;
@@ -34,12 +38,15 @@ a:hover{
   font-weight: 8px;
 }
 .login-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   font-family: "Outfit", Arial, sans-serif;
   color: #1d1d1d;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .header-login{
@@ -236,9 +243,12 @@ footer{
 }
 
 @media(max-width:500px){
+  
+  .login-subtitle,
   .login-title{
-    width: 450px;
+    width: 400px;
   }
+  
   .login-button{
     height: 50px;
   }
@@ -246,4 +256,86 @@ footer{
     height:100px;
   }
 
+}
+@media (max-width: 400px) {
+  .body-login {
+    max-width: 90%;
+  }
+  .--litle-size{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .--max-size{
+    display: none;
+  }
+
+}
+@media (max-width: 350px) {
+  .login-title,
+  .login-subtitle,
+  .imputs-containers,
+  .linea-texto-linea,
+  footer {
+    width: 90%;
+    text-align: center;
+  }
+
+  .login-title {
+    font-size: 14px;
+  }
+
+  .login-subtitle {
+    font-size: 12px;
+  }
+
+  .login-form input {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .login-button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .other-connections_container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .other-connections_buttons {
+    width: 90%;
+  }
+  span{
+    font-size: 10px;
+  }
+    .header-login-icon{
+    justify-content: center;
+  }
+  .login-subtitle{
+    display: none;
+  }
+  .--litle-size{
+    display: flex;
+  }
+
+}
+
+@media (max-width: 250px) {
+
+  .login-subtitle {
+    font-size: 11px;
+  }
+
+  .imputs-containers,
+  .linea-texto-linea,
+  .other-connections_buttons,
+  footer {
+    width: 100%;
+  }
+
+  .login-button {
+    font-size: 13px;
+  }
 }
