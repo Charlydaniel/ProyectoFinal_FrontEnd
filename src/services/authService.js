@@ -44,7 +44,7 @@ export async function login(email, password) {
     const response_http = await fetch(
         `${ENVIRONMENT.URL_API}/api/auth/login`,
         {
-            method: HTTP_METHODS.POST,
+            method: HTTP_METHODS.PUT,
             headers: {
                 [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
             },
