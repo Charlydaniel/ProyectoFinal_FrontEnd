@@ -1,20 +1,10 @@
 import React, { useEffect } from 'react'
 import useFetch from '../../Hooks/UseFetch'
 import { getWorkspaceList } from '../../services/workspaceServices'
+import HomeComponent from '../../Components/Home-Components/HomeComponent'
 
-const HomeScreen = () => {
+function HomeScreen() {
 
-    const {loading,response,error,sendRequest}=useFetch()
-
-    useEffect(()=>{
-                    sendRequest(
-                                getWorkspaceList
-                            )
-                  },[]
-            )
-            console.log(response,loading,error)
-  return (
-    <div>Wellcome to the HOME</div>
-  )
+  return <HomeComponent/>
 }
 export default HomeScreen

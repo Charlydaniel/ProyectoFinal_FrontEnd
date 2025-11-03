@@ -18,12 +18,12 @@
 }
 
 input{
-   outline: none; /* quita el borde azul predeterminado del navegador */
+   outline: none;
   transition: box-shadow 0.3s ease, border 0.3s ease;
 }
 input:focus {
-  border: 1px solid #4a90e2; /* cambia el color del borde */
-  box-shadow: 0 0 5px 1px #4a90e2; /* agrega el brillo */
+  border: 1px solid #4a90e2; 
+  box-shadow: 0 0 5px 1px #4a90e2;
 }
 a{
   text-decoration: none;
@@ -37,6 +37,7 @@ a:hover{
   font-size: 12px;
   font-weight: 8px;
 }
+
 .login-container {
   width: 100%;
   display: flex;

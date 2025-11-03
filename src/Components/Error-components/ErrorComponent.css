@@ -1,0 +1,26 @@
+
+.error-message{
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-family: "Outfit", Arial, sans-serif;
+}
+.error-container{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+    width: 500px;
+    border: 1px rgb(231, 221, 221) solid;
+    border-radius: 5px;
+    padding: 10px;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    box-shadow: -1px 1px 35px 7px rgba(247, 234, 234, 0.52);
+
+}
+
+.error-icon{
+    font-size: 50px;
+    color: red;
+}

@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700&display=swap');
+
+*{
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+}
+
+:root{
+    --principal-font:"Outfit", Arial, sans-serif;
+}
+.section-wellcome{
+    display: flex;
+    flex-direction: column;
+}
+.section-text{
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 10px 0;
+    font-family: var(--principal-font);
+}
+.section-title{
+
+    font-family:var(--principal-font);
+}
+.section-subtitle{
+display: flex;
+flex-direction: row;
+justify-content: center;
+font-family: var(--principal-font);
+font-weight: 10;
+padding: 0 0 30px 0;
+}
+.section-user{
+
+font-family: var(--principal-font);
+font-weight: 100;
+}

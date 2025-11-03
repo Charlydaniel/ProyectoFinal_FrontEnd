@@ -69,18 +69,18 @@ export default function LoguinComponent() {
 
     return (
         <div className='login-container'>
-            <header class="header-login">
+            <header className="header-login">
                 <div className='header-login-section'>
 
                 </div>
-                <div class="header-login-icon">
+                <div className="header-login-icon">
                     <a href="https://slack.com/">
                         <img src="https://a.slack-edge.com/bv1-13/slack_logo-ebd02d1.svg"    
                         alt="Slack Logo"
                         className="login-logo"/>
                     </a>
                 </div>
-                <div class="header-login-section">
+                <div className="header-login-section">
                     <p className='veri_small_text'>
                         ¿Nuevo en Slack?
                     </p>
@@ -151,13 +151,13 @@ export default function LoguinComponent() {
                         <div className='linea'></div>
                     </div>
 
-                        <div class="other-connections_container">
-                                <button class="other-connections_buttons">
+                        <div className="other-connections_container">
+                                <button className="other-connections_buttons">
                                     <FcGoogle />
                                     Google
                                 </button>
 
-                                <button class="other-connections_buttons">
+                                <button className="other-connections_buttons">
                                     <FaApple />
                                     Apple
                                 </button>

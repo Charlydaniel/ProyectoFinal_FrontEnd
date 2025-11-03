@@ -7,6 +7,7 @@ const useFetch = () => {
     const [error, setError] = useState(null)
 
     async function sendRequest(requestCallback) {
+
         try {
             //Marcamos que estamos cargando
             setLoading(true)
@@ -16,6 +17,8 @@ const useFetch = () => {
             const response = await requestCallback()
             //Seteamos el estado de respuesta 
             setResponse(response)
+            
+            return response
         }
         catch (error) {
             //Si hay fallo seteamos el error

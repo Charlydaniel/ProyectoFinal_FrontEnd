@@ -1,0 +1,94 @@
+import { useEffect, useState } from 'react';
+import { getMembers } from '../../../services/memberServices';
+import './WorkspaceItem.css' 
+import ErrorComponent from '../../Error-components/ErrorComponent';
+import useFetch from '../../../Hooks/UseFetch';
+
+export default function WorkspaceItem({nombre,imagen,id}){
+
+    const {loading, response, error, sendRequest } = useFetch();
+    const [members,setMembers]=useState([])
+
+
+
+    const getInitials = (nombre) => {
+    if (!nombre) return "";
+    const words = nombre.trim().split(" ");
+    const initials = words
+      .slice(0, 2)
+      .map(w => w[0]?.toUpperCase())
+      .join("");
+    return initials;
+  };
+
+  
+  useEffect(()=>{
+    const fetchData=async () =>{
+      try{
+            const {status,message,ok,data}=
+            await sendRequest(() => getMembers(id))
+            setMembers(data)
+          }
+      catch(err){
+
+      }
+
+    }
+    fetchData()
+  },[]) 
+
+  if(error){
+    <ErrorComponent error={error}/>
+  }
+
+    return(
+        
+        <li className='workspace-item-container'>
+            <div className="workspace-item-text">
+                {
+                    imagen?
+                    (<img className="workspace-item-image" src={imagen} alt={nombre}/>)
+                    :
+                    (
+                    <div className="workspace-item-char">
+                        {getInitials(nombre)}
+                    </div>
+                    )
+                }
+                <div className='workspace-item-right'>
+                    <p className="workspace-item-name">{nombre}</p>
+                    <div className='workspace-members'>
+                    <div className='workspaces-members-imgs'>
+                        { members && members.length > 0 
+                           ? (
+                                members.map((member) => (
+                                    <img 
+                                    key={member.id} 
+                                    className="workspace-members-img" 
+                                    src={member.imagen_avatar} 
+                                    alt={member.nombre || "Miembro"} 
+                                    />
+                                ))
+                                )
+                            : (
+                                <div className='workspace-members-cant'>Sin miembros</div>
+                                )
+                        }
+                    </div>
+                        {
+                            members.length > 1
+                            ?
+                            <p className='workspace-members-cant'>{members.length} miembros</p>
+                            :
+                            <p className='workspace-members-cant'>{members.length} miembro</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div className='line-container'>
+                    <hr className='h-line'/>
+            </div>
+        </li>
+
+    )
+}
