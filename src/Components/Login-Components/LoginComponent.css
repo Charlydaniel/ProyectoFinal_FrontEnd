@@ -222,9 +222,9 @@ footer{
 }
 
 @media(max-width:649px){
-  .header-login-section{
+/*   .header-login-section{
     display: none;
-  }
+  } */
   .header-login-icon{
     justify-content: start;
   }
