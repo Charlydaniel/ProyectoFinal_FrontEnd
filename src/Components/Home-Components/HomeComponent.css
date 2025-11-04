@@ -75,6 +75,20 @@ font-weight: 100;
     font-size: 12px;
 }
 
+.home-cerrar-sesion-btn{
+
+    display: flex;
+    height: 20px;
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    justify-content: start;
+    align-items: center;
+    padding: 0 7px;
+    cursor: pointer;
+}
+
+
 @media(max-width:670px){
     .section-title, .section-subtitle{
         width: 400px;

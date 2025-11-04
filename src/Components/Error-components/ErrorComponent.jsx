@@ -35,8 +35,8 @@ export default function ErrorComponent({ error }) {
 
                 <aside className='error-menu'>
                     <nav className='error-menu-buttons'>
-                        <button className='button-menu'>Producto</button>
-                        <button className='button-menu'>Precio</button>
+                        <button className='button-menu'>Productos</button>
+                        <button className='button-menu'>Precios</button>
                         <button className='button-menu'>Ayuda</button>
                         <div className='button-menu-ne'>
                             <button className='ne-button'>NE</button>
@@ -70,7 +70,7 @@ export default function ErrorComponent({ error }) {
                 <div className='footer-options-list'>
                     <ul className='footer-options-list-ul'>
                         <li className='li-title'>UTILIZAR SLACK</li>
-                        <li>Producto</li>
+                        <li>Productos</li>
                         <li>Enterprise</li>
                         <li>Precios</li>
                         <li>Ayuda</li>

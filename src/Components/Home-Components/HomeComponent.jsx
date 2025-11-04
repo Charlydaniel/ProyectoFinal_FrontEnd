@@ -7,6 +7,7 @@ import { getuser } from "../../services/authService";
 import ErrorComponent from "../Error-components/ErrorComponent";
 import './HomeComponent.css'
 import { COMPONENTS } from "../../constants/commonComponents";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeComponent() {
 
@@ -15,19 +16,37 @@ export default function HomeComponent() {
   const [user, setUser] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
 
-  useEffect(() => {
-    const fethcData=async()=>{
-      await sendRequest(() => getuser());
-      setInitialLoading(false)
-    }
-    fethcData()
-  }, []);
+  const navigate=useNavigate()
 
-  useEffect(() => {
-    if (response?.user) {
-      setUser(response.user);
-    }
-  }, [response]);
+  useEffect(
+              () => {
+                    const fethcData=async()=>
+                      {
+                        await sendRequest(() => getuser());
+                        setInitialLoading(false)
+                      }
+
+                    fethcData()
+                        
+                  }, []
+                )
+
+  useEffect(
+            () => {
+                    if (response?.user) 
+                      {
+                        setUser(response.user);
+                      }
+                  }, 
+                  [response]
+              )
+
+    const handleLogout = () => 
+                              {
+                                localStorage.removeItem("auth_token");
+                                navigate("/login");   
+                              }
+
 
   if ( loading || initialLoading || isLoading) {
     return (
@@ -51,6 +70,9 @@ export default function HomeComponent() {
               />
             </a>
           </div>
+          <button onClick={handleLogout} className="home-cerrar-sesion-btn">
+              Salir
+          </button>
         </header>
 
           {

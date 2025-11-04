@@ -143,7 +143,7 @@ export default function LoguinComponent({isRegister}) {
                             
                             {isRegister
                             ?(
-                                <input
+                                <input 
                                 placeholder={FORM_FIELDS.NAME}
                                 name={FORM_FIELDS.NAME}
                                 id={FORM_FIELDS.NAME}
@@ -160,6 +160,7 @@ export default function LoguinComponent({isRegister}) {
                             onChange={handleInputChange}
                         />
                         <input
+                            autoComplete='off'
                             name={FORM_FIELDS.PASSWORD}
                             id={FORM_FIELDS.PASSWORD}
                             type="password" placeholder="Password"
