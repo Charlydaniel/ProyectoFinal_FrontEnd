@@ -29,7 +29,7 @@ function App() {
           element={<RegisterAwaitConfirm />}
         />
           <Route
-          path='/verify-email/:token'
+          path='/api/auth/verify-email/:token'
           element={<VerifyEmailComponent />}
         />
         <Route
