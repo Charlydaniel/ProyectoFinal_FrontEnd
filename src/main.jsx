@@ -7,7 +7,6 @@ import HomeProvider from './Contexts/HomeContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-
         <LoginProvider>
               <HomeProvider>
                 <App />

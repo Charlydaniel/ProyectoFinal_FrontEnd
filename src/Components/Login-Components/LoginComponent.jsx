@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import useFetch from '../../Hooks/UseFetch'
 import useForm from '../../Hooks/UseForm'
-import { login } from '../../services/authService'
+import { login, register } from '../../services/authService'
 import { useNavigate } from 'react-router-dom'
 import LOCAL_STORAGE_KEYS from '../../constants/localStorage'
 import { LoginContext } from '../../Contexts/LoginContext'
@@ -9,17 +9,21 @@ import Spinner from '../../Components/Spinner/Spinner'
 import './LoginComponent.css'
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
+import { COMPONENTS } from '../../constants/commonComponents'
 
 
-export default function LoguinComponent() {
+export default function LoguinComponent({isRegister}) {
 
-    const { isLoading } = useContext(LoginContext)
+    const { isLoading,url_register } = useContext(LoginContext)
     const navigate = useNavigate()
+    
 
     const FORM_FIELDS =
     {
         EMAIL: 'email',
-        PASSWORD: 'password'
+        EMAIL_PLACEHOLDER:'nombre@work-email.com',
+        PASSWORD: 'password',
+        NAME:'Nombre'
     }
 
     const initial_form_state =
@@ -34,30 +38,37 @@ export default function LoguinComponent() {
 
         sendRequest(() => login(form_state[FORM_FIELDS.EMAIL], form_state[FORM_FIELDS.PASSWORD]))
     }
-
-    useEffect(
-        () => {
-            if (response && response.ok) {
-                //Guardamos el token emitido por el backend
-                //para despues usarlo como credencial
-                //Local storage es una tabla con clave|valor
-                localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.authorization_token)
-                navigate('/home')
-            }
-        }, [response]
-    )
-
-    const {
-        form_state: register_form_state,
-        handleSubmit,
-        handleInputChange
-    } = useForm(
-        {
-            initial_form_state,
-            onSubmit: onLogin
+     const onRegister = (form_state) => {
+            sendRequest(() => register(form_state[FORM_FIELDS.NAME], form_state[FORM_FIELDS.EMAIL], form_state[FORM_FIELDS.PASSWORD]))
         }
 
+    useEffect(
+
+        () => {
+            if (response && response.ok) {
+                if(!isRegister){
+                    localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.authorization_token)
+                    navigate('/home')
+                }
+                else{
+                    console.log('RESPONSE REGISTER', response.usuario);
+                    navigate(`/confirm/${response.usuario.email || response.email}`)
+                }
+            }
+
+        }, [response,isRegister]
     )
+
+
+    const {
+  form_state: register_form_state,
+  handleSubmit,
+  handleInputChange
+} = useForm({
+  initial_form_state,
+  onSubmit: isRegister ? onRegister : onLogin
+})
+
 
     if (isLoading) {
         return (
@@ -75,73 +86,134 @@ export default function LoguinComponent() {
                 </div>
                 <div className="header-login-icon">
                     <a href="https://slack.com/">
-                        <img src="https://a.slack-edge.com/bv1-13/slack_logo-ebd02d1.svg"    
+                        <img src={COMPONENTS.HEADER_ICON}    
                         alt="Slack Logo"
                         className="login-logo"/>
                     </a>
                 </div>
-                <div className="header-login-section">
-                    <p className='veri_small_text'>
-                        ¿Nuevo en Slack?
-                    </p>
-                    <a className='veri_small_text'
-                        href="https://slack.com/get-started?entry_point=signin_header#/createnew">
-                        Crea una cuenta
-                    </a>           
-                </div>
+                {
+                    !isRegister
+                    ?
+                    (
+                    <div className="header-login-section">
+                        <p className='veri_small_text'>
+                            ¿Nuevo en Slack?
+                        </p>
+                        <a className='veri_small_text'
+                            href={url_register}>
+                            Crea una cuenta
+                        </a>           
+                    </div>
+                    )
+                    :
+                    (
+                    <div className="header-login-section">         
+                    </div>
+                    )
+                }   
+
             </header>
             <div className='body-login'>
                 <div className="login-title">
-                    <h1 className='--max-size'>Escribe tu correo electrónico para conectarte</h1>
-                    <h1 className='--litle-size'>Escribe tu correo para conectarte</h1>
+                    {
+                        !isRegister
+                        ?
+                        (
+                            <div>
+                                <h1 className='--max-size'>Escribe tu correo electrónico para conectarte</h1>
+                                <h1 className='--litle-size'>Escribe tu correo para conectarte</h1>
+                            </div>
+
+                        )
+                        :
+                        (
+                            <div>
+                                <h1 className='--max-size'>Completa tus datos para conectarte</h1>
+                                <h1 className='--litle-size'>Completa tus datos</h1>
+                            </div>
+
+                        )
+                    }
+
                     <div className="login-subtitle">O selecciona otra forma de conectarte.</div>
                 </div>
                 <br />
                 <form onSubmit={handleSubmit} className="login-form">
                      <div className='imputs-containers'>
-                            <input
-                            type="email" placeholder="nombre@work-email.com"
+                            
+                            {isRegister
+                            ?(
+                                <input
+                                placeholder={FORM_FIELDS.NAME}
+                                name={FORM_FIELDS.NAME}
+                                id={FORM_FIELDS.NAME}
+                                onChange={handleInputChange}
+                            />
+                            )
+                            :
+                            <></>
+                        }
+                        <input
+                            type="email" placeholder={FORM_FIELDS.EMAIL_PLACEHOLDER}
                             name={FORM_FIELDS.EMAIL}
                             id={FORM_FIELDS.EMAIL}
                             onChange={handleInputChange}
                         />
-        
                         <input
                             name={FORM_FIELDS.PASSWORD}
                             id={FORM_FIELDS.PASSWORD}
                             type="password" placeholder="Password"
                             onChange={handleInputChange}
-                        />    
+                        /> 
                         {
-                            !response
-                                ? 
-                                 <div>
-                                    <button 
-                                    className="login-button --max-size"
-                                    type="submit" disabled={false}
-                                    >Conectarse a travéz del correo electrónico
-                                    </button>
-                                    <button 
-                                    className="login-button --litle-size"
-                                    type="submit" disabled={false}
-                                    >Continuar
-                                    </button>
-                                 </div>
-         
-                                    
-                                :
-                                <>
-                                    <button 
-                                        className="login-button"
-                                        type="submit" disabled={true}>Registrarse
-                                    </button>
-                                    <span style={{ color: 'green' }}>{response.message}</span>
-                                </>
-                        }
-                        {
-                            error && <span style={{ color: 'red' }}>{error.message}</span>
+                            isRegister
+                            ?
+                            (
 
-                        }        
+                            <button 
+                                className="login-button"
+                                type="submit" disabled={false}
+                                >Continuar
+                            </button>
+
+                            )
+                            :
+                            (
+                            <div>
+                                    {
+                                        !response
+                                            ? 
+                                            <div>
+                                                <button 
+                                                className="login-button --max-size"
+                                                type="submit" disabled={false}
+                                                >Conectarse a travéz del correo electrónico
+                                                </button>
+                                                <button 
+                                                className="login-button --litle-size"
+                                                type="submit" disabled={false}
+                                                >Continuar
+                                                </button>
+                                            </div>
+                                                
+                                            :
+                                            <>
+                                                <button 
+                                                    className="login-button"
+                                                    type="submit" disabled={true}>Registrarse
+                                                </button>
+                                                <span style={{ color: 'green' }}>{response.message}</span>
+                                            </>
+                                    }
+                                    {
+                                        error && <span style={{ color: 'red' }}>{error.message}</span>
+
+                                    }    
+                        </div>
+
+                            )
+                        }  
+                            
                     </div>   
                 </form>
                 <footer>

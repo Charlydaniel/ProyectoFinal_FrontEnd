@@ -3,6 +3,9 @@ import { getMembers } from '../../../services/memberServices';
 import './WorkspaceItem.css' 
 import ErrorComponent from '../../Error-components/ErrorComponent';
 import useFetch from '../../../Hooks/UseFetch';
+import { FaArrowRightLong } from "react-icons/fa6";
+
+
 
 export default function WorkspaceItem({nombre,imagen,id}){
 
@@ -43,7 +46,7 @@ export default function WorkspaceItem({nombre,imagen,id}){
 
     return(
         
-        <li className='workspace-item-container'>
+        <div className='workspace-item-container'>
             <div className="workspace-item-text">
                 {
                     imagen?
@@ -60,7 +63,7 @@ export default function WorkspaceItem({nombre,imagen,id}){
                     <div className='workspace-members'>
                     <div className='workspaces-members-imgs'>
                         { members && members.length > 0 
-                           ? (
+                        ? (
                                 members.map((member) => (
                                     <img 
                                     key={member.id} 
@@ -84,11 +87,15 @@ export default function WorkspaceItem({nombre,imagen,id}){
                         }
                     </div>
                 </div>
+                <div className='workspace-goto'>
+                    <span className='workspace-goto-lavel'>Abrir</span>
+                    <FaArrowRightLong />
+                </div>
             </div>
             <div className='line-container'>
                     <hr className='h-line'/>
             </div>
-        </li>
+        </div>
 
     )
 }

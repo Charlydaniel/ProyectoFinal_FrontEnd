@@ -4,8 +4,10 @@ import LoguinComponent from "../../Components/Login-Components/LoginComponent"
 
 export default function LoguinScreen(){
 
+const isRegister=false
+
 return (
-  <LoguinComponent/>
+  <LoguinComponent isRegister={isRegister}/>
 )
 
 }

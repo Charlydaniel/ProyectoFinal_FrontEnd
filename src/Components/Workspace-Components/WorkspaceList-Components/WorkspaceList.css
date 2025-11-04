@@ -35,3 +35,18 @@ body{
     display: flex;
     flex-direction: column;
 }
+@media(max-width:430px){
+    .Workspace-list-body{
+        width: 300px;
+        justify-content: center;
+        align-items: center;
+    }
+}
+@media(max-width:330px){
+    .Workspace-list-body{
+        width: 250px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}

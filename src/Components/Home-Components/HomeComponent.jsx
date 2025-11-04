@@ -6,6 +6,7 @@ import WorkspaceListComponent from "../Workspace-Components/WorkspaceList-Compon
 import { getuser } from "../../services/authService";
 import ErrorComponent from "../Error-components/ErrorComponent";
 import './HomeComponent.css'
+import { COMPONENTS } from "../../constants/commonComponents";
 
 export default function HomeComponent() {
 
@@ -44,7 +45,7 @@ export default function HomeComponent() {
           <div className="header-login-icon">
             <a href="https://slack.com/">
               <img
-                src="https://a.slack-edge.com/bv1-13/slack_logo-ebd02d1.svg"
+                src={COMPONENTS.HEADER_ICON}
                 alt="Slack Logo"
                 className="login-logo"
               />
@@ -59,19 +60,26 @@ export default function HomeComponent() {
             (
             <section className="section-wellcome">
               <div className="section-text">
-                <h1 className="section-title">¡Hola de nuevo! ¡No olvides hidratarte!</h1>
-                <h5 className="section-subtitle">Elige uno de los siguientes espacios de trabajo para volver a trabajar con tu equipo.</h5>
-                <h3 className="section-title">Listo para comenzar</h3>
+                <h1 className="section-title --max-width">¡Hola de nuevo! ¡No olvides hidratarte!</h1>
+                <h1 className="section-title --min-width">¡Hola de nuevo!</h1>
+                <h5 className="section-subtitle --max-width">Elige uno de los siguientes espacios de trabajo para volver a trabajar con tu equipo.</h5>
+                <h5 className="section-subtitle --min-width">Elige uno de los siguientes espacios de trabajo.</h5>
+                <h3 className="">Listo para comenzar</h3>
                 <p className="section-user">{user?.email || "Usuario"}</p> 
               </div>
               <div>
                   <WorkspaceListComponent /> 
               </div>
-
             </section>
             )
           }
-
+              <footer>
+                <div className="footer-slac-uses">
+                  <img className="footer-slac-uses-img" src="https://a.slack-edge.com/bv1-13/get-started-workspaces-icon-88e0cb1.svg" alt="" />
+                  <span className="footer-slac-uses-text">¿Quieres usar Slack con un equipo distinto?</span>
+                  <button className="footer-button-workspaces">Crear otro espacio de trabajo</button>
+                </div>
+              </footer>
       </div>
   );
 }
