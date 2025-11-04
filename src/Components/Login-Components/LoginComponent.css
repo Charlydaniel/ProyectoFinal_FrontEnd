@@ -222,9 +222,9 @@ footer{
 }
 
 @media(max-width:649px){
-/*   .header-login-section{
+  .veri_small_text{
     display: none;
-  } */
+  } 
   .header-login-icon{
     justify-content: start;
   }
