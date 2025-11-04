@@ -10,6 +10,7 @@ import LoginMidelware from './MidelWarres/AuthMidelware/LoginMidleware'
 import HomeScreen from './Screens/HomeScreen/HomeScreen'
 import RegisterAwaitConfirm from './Components/Login-Components/RegisterAwaitConfirm'
 import ErrorComponent from './Components/Error-components/ErrorComponent'
+import VerifyEmailComponent from './Components/Verify-Email-components/VerifyEmail'
 
 
 
@@ -26,6 +27,10 @@ function App() {
         <Route
           path='/confirm/:email'
           element={<RegisterAwaitConfirm />}
+        />
+            <Route
+          path='/confirm/:token'
+          element={<VerifyEmailComponent />}
         />
         <Route
           path='/register'
