@@ -81,7 +81,7 @@ export default function LoguinComponent({isRegister}) {
     return (
         <div className='login-container'>
             <header className="header-login">
-                <div className='header-login-section'>
+                <div className='header-login-section --section-header-left'>
 
                 </div>
                 <div className="header-login-icon">

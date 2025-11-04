@@ -222,10 +222,11 @@ footer{
 }
 
 @media(max-width:649px){
-  .veri_small_text{
-    display: none;
-  } 
-  .header-login-section{
+
+  .header-login-section.--section-header-left {
+    display: none !important;
+  }
+    .header-login-section{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -236,6 +237,10 @@ footer{
     margin: 0;
     width: 120px;
   }
+  .veri_small_text{
+    display: none;
+  } 
+
   .header-login-icon{
     justify-content: start;
   }
@@ -324,8 +329,9 @@ footer{
   span{
     font-size: 10px;
   }
-    .header-login-icon{
-    justify-content: center;
+  .header-login{
+    padding: 0;
+    justify-content: space-between;
   }
   .login-subtitle{
     display: none;
