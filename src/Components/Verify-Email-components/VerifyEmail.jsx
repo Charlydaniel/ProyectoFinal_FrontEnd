@@ -11,12 +11,14 @@ export default function VerifyEmailComponent(){
     const [initialLoading, setInitialLoading] = useState(true);
     const {token}=useParams()
 
+
     useEffect(
                 () => {
                         const fethcData=async()=>
                         {
                             await sendRequest(() => verifyUser(token));
                             setInitialLoading(false)
+
                         }
                         fethcData()
                             
@@ -35,8 +37,13 @@ export default function VerifyEmailComponent(){
                         </a>
                     </div>
                 </header>
-            </div>
-            <div>Gracias!, verificado</div>
+            </div >
+            <div className='login-container-button'>Gracias !,ya podemos comenzar {response?.user_name}</div>
+            <button className="verify-login-button">
+                <a className="a-into-button" href="/home">
+                    Iniciar sesión
+                </a>
+            </button>
         </div>
     )
 }
