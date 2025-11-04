@@ -85,7 +85,7 @@ export default function LoguinComponent({isRegister}) {
 
                 </div>
                 <div className="header-login-icon">
-                    <a href="https://slack.com/">
+                    <a href="/home">
                         <img src={COMPONENTS.HEADER_ICON}    
                         alt="Slack Logo"
                         className="login-logo"/>
