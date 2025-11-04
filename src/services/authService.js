@@ -44,7 +44,9 @@ export async function login(email, password) {
         password
     }
 
+
     const response_http = await fetch(
+        
         `${ENVIRONMENT.URL_API}${USER_URL.LOGIN}`,
         {
             method: HTTP_METHODS.POST,
@@ -54,10 +56,11 @@ export async function login(email, password) {
             body: JSON.stringify(usuario)
         }
     )
+  
     const response_data = await response_http.json()
-
-    if (!response_data.ok) {
-        throw new Error(response_data.message)
+  console.log(response_data)
+    if (!response_http.ok) {
+        throw new Error(response_data.message || 'Error en la respuesta del servidor')
     }
 
     return response_data
@@ -66,27 +69,19 @@ export async function login(email, password) {
 export async function getuser() {
 
 
-        const response_http = await fetch(
-            `${ENVIRONMENT.URL_API}${USER_URL.GET}`,
-            {
-                method: HTTP_METHODS.GET,
-                headers: {
-                    'Authorization': 'Bearer ' +
-                        token,
-                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
-                }
-            }
-        )
-
-    if (!response_http.ok) {
-        const error_data = await response_http.json()
-        throw new Error(error_data.message || 'Error al obtener el usuario');
+const response_http = await fetch(
+    `${ENVIRONMENT.URL_API}${USER_URL.GET}`,
+    {
+        method: HTTP_METHODS.GET,
+        headers: {
+            'Authorization': 'Bearer ' +
+                localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN),
+            [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
+        }
     }
-
-    const response_data = await response_http.json()
-
-    return response_data
+)
 }
+
 export async function verifyUser(token) {
 
         const response_http = await fetch(
