@@ -7,7 +7,7 @@ const USER_URL = {
     GET: '/api/users/get_user/get',
     REGISTER: '/api/auth/register',
     LOGIN: '/api/auth/login',
-    VERIFY:'/api/auth/verify-email/:verification_token'
+    VERIFY:'/api/auth/verify-email/'
 }
 
 export async function register(name, email, password) {
@@ -90,7 +90,7 @@ export async function getuser() {
 export async function verifyUser({token}) {
 
         const response_http = await fetch(
-                    `${ENVIRONMENT.URL_API}${USER_URL.VERIFY}/${token}`,
+                    `${ENVIRONMENT.URL_API}${USER_URL.VERIFY}${token}`,
                     {
                     method: HTTP_METHODS.GET,
                     }
