@@ -87,7 +87,7 @@ export async function getuser() {
 
     return response_data
 }
-export async function verifyUser({token}) {
+export async function verifyUser(token) {
 
         const response_http = await fetch(
                     `${ENVIRONMENT.URL_API}${USER_URL.VERIFY}${token}`,
