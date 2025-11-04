@@ -55,12 +55,16 @@ function App() {
             path='/home'
             element={<HomeScreen />}
           />
-               <Route
+          
+        </Route>
+        
+        <Route
           element={<HomeMidelware />}>
           <Route
             path='/'
             element={<HomeScreen />}
           />
+          
         </Route>
            <Route
               path='*'
