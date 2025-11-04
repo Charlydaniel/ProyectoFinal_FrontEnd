@@ -3,10 +3,11 @@ import ENVIRONMENT from "../config/environment"
 import LOCAL_STORAGE_KEYS from "../constants/localStorage"
 
 
-const USER_URL={
-    GET:'/api/users/get_user/get',
-    REGISTER:'/api/auth/register',
-    LOGIN:'/api/auth/login'
+const USER_URL = {
+    GET: '/api/users/get_user/get',
+    REGISTER: '/api/auth/register',
+    LOGIN: '/api/auth/login',
+    VERIFY:'/api/auth/verify-email/:verification_token'
 }
 
 export async function register(name, email, password) {
@@ -36,8 +37,7 @@ export async function register(name, email, password) {
     return response_data
 }
 
-
-export async function login(email, password) {  
+export async function login(email, password) {
 
     const usuario = {
         email,
@@ -56,34 +56,51 @@ export async function login(email, password) {
     )
     const response_data = await response_http.json()
 
-    if (!response_data.ok){
+    if (!response_data.ok) {
         throw new Error(response_data.message)
     }
 
     return response_data
 }
 
-export async function getuser(){
+export async function getuser() {
 
-    const response_http=await fetch(
-        `${ENVIRONMENT.URL_API}${USER_URL.GET}`,
-        {
-            method:HTTP_METHODS.GET,
-            headers:{
-            'Authorization': 'Bearer ' +
-                localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN),
-                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
+
+        const response_http = await fetch(
+            `${ENVIRONMENT.URL_API}${USER_URL.GET}`,
+            {
+                method: HTTP_METHODS.GET,
+                headers: {
+                    'Authorization': 'Bearer ' +
+                        token,
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
+                }
             }
-        }
-    )
+        )
 
-    if(!response_http.ok){
-        const error_data= await response_http.json()
+    if (!response_http.ok) {
+        const error_data = await response_http.json()
         throw new Error(error_data.message || 'Error al obtener el usuario');
     }
 
-    const response_data= await response_http.json()
+    const response_data = await response_http.json()
 
     return response_data
 }
+export async function verifyUser({token}) {
 
+        const response_http = await fetch(
+                    `${ENVIRONMENT.URL_API}${USER_URL.VERIFY}/${token}`,
+                    {
+                    method: HTTP_METHODS.GET,
+                    }
+        )
+    if (!response_http.ok) {
+        const error_data = await response_http.json()
+        throw new Error(error_data.message || 'Error al obtener el usuario');
+    }
+
+    const response_data = await response_http.json()
+
+    return response_data
+}

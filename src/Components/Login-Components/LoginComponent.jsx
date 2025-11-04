@@ -51,7 +51,6 @@ export default function LoguinComponent({isRegister}) {
                     navigate('/home')
                 }
                 else{
-                    console.log('RESPONSE REGISTER', response.usuario);
                     navigate(`/confirm/${response.usuario.email || response.email}`)
                 }
             }
