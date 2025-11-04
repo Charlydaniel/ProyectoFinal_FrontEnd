@@ -170,12 +170,20 @@ export default function LoguinComponent({isRegister}) {
                             ?
                             (
 
-                            <button 
-                                className="login-button"
-                                type="submit" disabled={false}
-                                >Continuar
-                            </button>
-
+                                <div>
+                                    <button 
+                                        className="login-button"
+                                        type="submit" disabled={false}
+                                        >Continuar
+                                    </button>
+                                    
+                                 {   !response
+                                    ?
+                                    error && <span style={{ color: 'red' }}>{error.message}</span>
+                                    :
+                                    error && <span style={{ color: 'red' }}>{error.message}</span>
+                                 }
+                                </div>
                             )
                             :
                             (
@@ -202,7 +210,6 @@ export default function LoguinComponent({isRegister}) {
                                                     className="login-button"
                                                     type="submit" disabled={true}>Registrarse
                                                 </button>
-                                                <span style={{ color: 'green' }}>{response.message}</span>
                                             </>
                                     }
                                     {
