@@ -99,7 +99,7 @@ export default function LoguinComponent({isRegister}) {
                         <p className='veri_small_text'>
                             ¿Nuevo en Slack?
                         </p>
-                        <a className='veri_small_text'
+                        <a className='header-login-create-account'
                             href={url_register}>
                             Crea una cuenta
                         </a>           

@@ -225,10 +225,23 @@ footer{
   .veri_small_text{
     display: none;
   } 
+  .header-login-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    justify-content: end;
+    text-align: end;
+    padding: 0;
+    margin: 0;
+    width: 120px;
+  }
   .header-login-icon{
     justify-content: start;
   }
-
+  .header-login-create-account{
+    width: 200px;
+  }
     .header-login{
     height: 63px;
     margin: 0;
@@ -320,7 +333,10 @@ footer{
   .--litle-size{
     display: flex;
   }
-
+  .header-login-section{
+    width: 80px;
+    font-size: 10px;
+  }
 }
 
 @media (max-width: 250px) {
