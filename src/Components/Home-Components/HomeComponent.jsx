@@ -33,18 +33,13 @@ export default function HomeComponent() {
 
   useEffect(
             () => {
-                    if (response?.user) 
-                      {
-                        setUser(response.user);
-                      }
+                    if (response?.user) {setUser(response.user)}
                   }, 
                   [response]
               )
 
-    const handleLogout = () => 
-                              {
-                                localStorage.removeItem("auth_token");
-                                navigate("/login");   
+    const handleLogout = () => {localStorage.removeItem("auth_token")
+                                navigate("/login")   
                               }
 
 
@@ -90,7 +85,7 @@ export default function HomeComponent() {
                 <p className="section-user">{user?.email || "Usuario"}</p> 
               </div>
               <div>
-                  <WorkspaceListComponent /> 
+                  <WorkspaceListComponent member={user}/> 
               </div>
             </section>
             )

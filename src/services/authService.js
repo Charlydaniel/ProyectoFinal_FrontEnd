@@ -36,7 +36,6 @@ export async function register(name, email, password) {
 
     return response_data
 }
-
 export async function login(email, password) {
 
     const usuario = {
@@ -58,16 +57,14 @@ export async function login(email, password) {
     )
   
     const response_data = await response_http.json()
-  console.log(response_data)
+
     if (!response_http.ok) {
         throw new Error(response_data.message || 'Error en la respuesta del servidor')
     }
 
     return response_data
 }
-
 export async function getuser() {
-
 
 const response_http = await fetch(
     `${ENVIRONMENT.URL_API}${USER_URL.GET}`,
@@ -80,8 +77,10 @@ const response_http = await fetch(
         }
     }
 )
+    const response_data = await response_http.json()
+    
+    return response_data
 }
-
 export async function verifyUser(token) {
 
         const response_http = await fetch(

@@ -12,8 +12,7 @@ export async function getMembers(workspace_id) {
     const workspace={
         workspace_id
     }
-  
-    console.log('ID WORKSPACE', workspace_id)
+
     const response_http = await fetch(
         `${ENVIRONMENT.URL_API}${MEMBER_URL.GET_BY_WORKSPACE}`,
         {

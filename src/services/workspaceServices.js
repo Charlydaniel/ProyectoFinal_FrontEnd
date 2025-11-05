@@ -1,9 +1,10 @@
 import ENVIRONMENT from "../config/environment";
-import { HTTP_METHODS } from "../constants/http";
+import { CONTENT_TYPE_VALUES, HEADERS, HTTP_METHODS } from "../constants/http";
 import LOCAL_STORAGE_KEYS from "../constants/localStorage";
 
 const WORKSPACE_URL={
-    GET:'/api/workspaces/'
+    GET:'/api/workspaces/',
+    GET_BY_MEMBERS:'/api/workspace_member/get_by_member/get_workspaces'
 }
 
 export async function CreateWorkspace(name, image) {
@@ -30,21 +31,23 @@ export async function CreateWorkspace(name, image) {
 
     return response_data
 }
-export const getWorkspaceList= async ()=>{
+export const getWorkspaceList= async (member_id)=>{
 
-const response_http= await fetch(`${ENVIRONMENT.URL_API}${WORKSPACE_URL.GET}`,
+    const response_http = await fetch(
+        `${ENVIRONMENT.URL_API}${WORKSPACE_URL.GET_BY_MEMBERS}`,
         {
-            method:HTTP_METHODS.GET,
-            headers:{
-                'Authorization': 'Bearer ' +
-                localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN)
-            }
+        method: HTTP_METHODS.POST,
+        headers: {
+            [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
+            'Authorization': 'Bearer ' + localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN)
+        },
+        body: JSON.stringify({ member_id }) 
         }
     )
     const response_data= await response_http.json()
-    
-    if(!response_data.ok){
-        throw new Error(response_data.message)
+
+    if(!response_http.ok){
+        throw new Error(response_data.message || "Error en el servicio de Workspaces")
     }
     return response_data
 }

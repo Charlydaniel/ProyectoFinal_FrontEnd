@@ -177,7 +177,8 @@ export default function LoguinComponent({isRegister}) {
                                         >Continuar
                                     </button>
                                     
-                                 {   !response
+                                 {   
+                                 !response
                                     ?
                                     error && <span style={{ color: 'red' }}>{error.message}</span>
                                     :

@@ -94,7 +94,7 @@
     width: 100%;
     height: 80px;
     border: none;
-     cursor: pointer;
+    cursor: pointer;
 }
 .workspace-item-container:hover{
     background-color: rgb(247, 248, 248);
@@ -155,7 +155,12 @@
         align-items: center;
         justify-content: center;
     }
+    .workspace-goto-lavel{
+        display: none;
+    }
     .workspace-goto{
+        padding: 0;
         width: 50px;
+        font-size: 20PX;
     }
 }
