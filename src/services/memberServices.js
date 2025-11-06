@@ -18,9 +18,9 @@ export async function getMembers(workspace_id) {
         {
             method: HTTP_METHODS.POST,
             headers:{
-                 [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
-                    'Authorization': 'Bearer ' +
-                    localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN)
+                'Authorization': 'Bearer ' +
+                    localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN),
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
                 },
             body:JSON.stringify(workspace)
         }

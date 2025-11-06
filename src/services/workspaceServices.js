@@ -31,7 +31,7 @@ export async function CreateWorkspace(name, image) {
 
     return response_data
 }
-export const getWorkspaceList= async (member_id)=>{
+export const getWorkspaceList= async ()=>{
 
     const response_http = await fetch(
         `${ENVIRONMENT.URL_API}${WORKSPACE_URL.GET_BY_MEMBERS}`,
@@ -40,8 +40,7 @@ export const getWorkspaceList= async (member_id)=>{
         headers: {
             [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
             'Authorization': 'Bearer ' + localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN)
-        },
-        body: JSON.stringify({ member_id }) 
+        }
         }
     )
     const response_data= await response_http.json()
@@ -49,5 +48,28 @@ export const getWorkspaceList= async (member_id)=>{
     if(!response_http.ok){
         throw new Error(response_data.message || "Error en el servicio de Workspaces")
     }
+    return response_data
+}
+
+export default async function getWorkspace(workspace_id){
+    
+    const response_http = await fetch(
+
+        `${ENVIRONMENT.URL_API}${WORKSPACE_URL.GET}${workspace_id}`,
+        { 
+            method:HTTP_METHODS.GET,
+            headers:{
+                [HEADERS.CONTENT_TYPE]:CONTENT_TYPE_VALUES.JSON,
+                'Authorization': 'Bearer ' + localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN)
+            }
+        }
+    )
+    const response_data= await response_http.json()
+
+
+    if(!response_http.ok){
+        throw new Error(response_data.message || 'Error al buscar el workspace')
+    }
+    
     return response_data
 }

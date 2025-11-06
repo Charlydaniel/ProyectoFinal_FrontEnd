@@ -85,7 +85,7 @@ export default function HomeComponent() {
                 <p className="section-user">{user?.email || "Usuario"}</p> 
               </div>
               <div>
-                  <WorkspaceListComponent member={user}/> 
+                  <WorkspaceListComponent/> 
               </div>
             </section>
             )

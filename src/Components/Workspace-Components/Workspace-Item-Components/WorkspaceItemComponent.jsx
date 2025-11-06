@@ -4,6 +4,7 @@ import './WorkspaceItem.css'
 import ErrorComponent from '../../Error-components/ErrorComponent';
 import useFetch from '../../../Hooks/UseFetch';
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -11,25 +12,33 @@ export default function WorkspaceItem({nombre,imagen,id}){
 
     const {loading, response, error, sendRequest } = useFetch();
     const [members,setMembers]=useState([])
+    const [gotoNext,setGoTo]=useState(false)
 
-
+    const navigate=useNavigate()
 
     const getInitials = (nombre) => {
-    if (!nombre) return "";
-    const words = nombre.trim().split(" ");
-    const initials = words
-      .slice(0, 2)
-      .map(w => w[0]?.toUpperCase())
-      .join("");
-    return initials;
-  };
+        if (!nombre) return "";
+        const words = nombre.trim().split(" ")
+        const initials = words.slice(0, 2).map(w => w[0]?.toUpperCase()).join("")
+        return initials
+    }
 
+    const onSelectWorkspaces = ()=>{
+        setGoTo(true)
+    }
+
+
+    useEffect(()=>{
+        if(gotoNext){
+                        navigate('/api/workspaces/'+id)
+                    }},
+                [gotoNext]
+            )
   
   useEffect(()=>{
     const fetchData=async () =>{
       try{
-            const {status,message,ok,data}=
-            await sendRequest(() => getMembers(id))
+            const {status,message,ok,data} = await sendRequest(() => getMembers(id))
             setMembers(data)
           }
       catch(err){
@@ -39,6 +48,7 @@ export default function WorkspaceItem({nombre,imagen,id}){
     }
     fetchData()
   },[]) 
+
 
   if(error){
     <ErrorComponent error={error}/>
@@ -87,7 +97,7 @@ export default function WorkspaceItem({nombre,imagen,id}){
                         }
                     </div>
                 </div>
-                <div className='workspace-goto'>
+                <div onClick={onSelectWorkspaces} className='workspace-goto'>
                     <span className='workspace-goto-lavel'>Abrir</span>
                     <FaArrowRightLong />
                 </div>

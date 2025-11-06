@@ -96,6 +96,7 @@
     border: none;
     cursor: pointer;
 }
+
 .workspace-item-container:hover{
     background-color: rgb(247, 248, 248);
 }

@@ -3,9 +3,11 @@ import useFetch from "../../../Hooks/UseFetch"
 import { getWorkspaceList } from "../../../services/workspaceServices"
 import WorkspaceItem from "../Workspace-Item-Components/WorkspaceItemComponent"
 import "./WorkspaceList.css"
+import ErrorComponent from "../../Error-components/ErrorComponent"
 
 
-export default function WorkspaceListComponent({ member }) {
+export default function WorkspaceListComponent() {
+  
   const { loading, response, error, sendRequest } = useFetch()
   const [workspaces, setWorkspaces] = useState([])
 
@@ -14,7 +16,7 @@ export default function WorkspaceListComponent({ member }) {
 
     const fetchData = async () => {
     try {
-        const result = await sendRequest(() => getWorkspaceList(member.id))
+        const result = await sendRequest(() => getWorkspaceList())
 
         if (!result || !result.data) {
           setWorkspaces([])
@@ -27,15 +29,14 @@ export default function WorkspaceListComponent({ member }) {
     
           setWorkspaces([]) 
       } 
-      
 
     }
 
     fetchData()
-  }, [member])
+  }, [])
 
   if (error) {
-    
+      <ErrorComponent/>
   }
 
   return (

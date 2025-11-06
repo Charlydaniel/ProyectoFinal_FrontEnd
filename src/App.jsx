@@ -11,6 +11,8 @@ import HomeScreen from './Screens/HomeScreen/HomeScreen'
 import RegisterAwaitConfirm from './Components/Login-Components/RegisterAwaitConfirm'
 import ErrorComponent from './Components/Error-components/ErrorComponent'
 import VerifyEmailComponent from './Components/Verify-Email-components/VerifyEmail'
+import { register } from './services/authService'
+import WorkspaceCompoenent from './Components/Workspace-Components/Workspace-components/WorkspaceComponent'
 
 
 
@@ -23,7 +25,13 @@ function App() {
   return (
     /*Antes de ir a la Home pasa por el midleware <AuthMidleware/>*/
     <div>
+
         <Routes>
+
+        <Route
+          path='/api/workspaces/:workspace_id'
+          element={<WorkspaceCompoenent />}
+        />
         <Route
           path='/confirm/:email'
           element={<RegisterAwaitConfirm />}
