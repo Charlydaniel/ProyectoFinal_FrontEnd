@@ -12,11 +12,11 @@ const LoginProvider = ({ children }) => {
   
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
+      setLoading(false)
+    }, 800)
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <LoginContext.Provider value={{ isLoading,url_register,user_data,setUserData}}>

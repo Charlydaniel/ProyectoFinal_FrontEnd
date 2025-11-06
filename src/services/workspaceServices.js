@@ -66,9 +66,10 @@ export default async function getWorkspace(workspace_id){
     )
     const response_data= await response_http.json()
 
-
+    console.warn(response_data)
     if(!response_http.ok){
         throw new Error(response_data.message || 'Error al buscar el workspace')
+
     }
     
     return response_data

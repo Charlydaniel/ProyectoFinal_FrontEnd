@@ -1,47 +1,67 @@
 import './workspaceComponent.css'
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
-import { RiHistoryLine, RiHome3Fill } from "react-icons/ri";
-import { IoSearchOutline } from "react-icons/io5";
-import { GoQuestion } from "react-icons/go";
-import { PiBellThin } from "react-icons/pi";
-import { ImFilesEmpty } from "react-icons/im";
-import { LuMessagesSquare } from "react-icons/lu";
-import { useContext, useEffect, useState } from 'react';
-import Spinner from '../../Spinner/Spinner';
-import useFetch from '../../../Hooks/UseFetch';
-import { useParams } from 'react-router-dom';
-import getWorkspace from '../../../services/workspaceServices';
-import { LoginContext } from '../../../Contexts/LoginContext';
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa6"
+import { RiHistoryLine, RiHome3Fill } from "react-icons/ri"
+import { IoSearchOutline } from "react-icons/io5"
+import { GoQuestion } from "react-icons/go"
+import { PiBellThin } from "react-icons/pi"
+import { ImFilesEmpty } from "react-icons/im"
+import { LuMessagesSquare } from "react-icons/lu"
+import { useContext, useEffect, useState } from 'react'
+import Spinner from '../../Spinner/Spinner'
+import useFetch from '../../../Hooks/UseFetch'
+import { useParams } from 'react-router-dom'
+import getWorkspace from '../../../services/workspaceServices'
+import { LoginContext } from '../../../Contexts/LoginContext'
+import ErrorComponent from '../../Error-components/ErrorComponent'
 
 
 export default function WorkspaceCompoenent() {
 
-  const { isLoading } = useContext(LoginContext);
-  const { response, ok, message, sendRequest } = useFetch();
-  const [workspace, setWorkspace] = useState(null);
+  const { isLoading } = useContext(LoginContext)
+  const {response, ok, message, sendRequest } = useFetch()
+  const [workspace, setWorkspace] = useState(null)
+  const [get_workspace_ok,setGetWorkspace]=useState(false)
 
-  const { workspace_id } = useParams();
-  const id = Number(workspace_id);
+  const { workspace_id } = useParams()
+  const id = Number(workspace_id)
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await sendRequest(() => getWorkspace(id));
+        const result = await sendRequest(() => getWorkspace(id))
         if (result.data.workspace) {
-          setWorkspace(result.data.workspace);
+          setWorkspace(result.data.workspace)
+          setGetWorkspace(result.ok)
         }
       } catch (err) {
         console.warn(err);
       }
     };
-    fetchData();
+    fetchData()
   }, [id]);
 
-  
-  if (isLoading || !workspace) {
-    return <Spinner />;
+  useEffect(
+    ()=>{
+      console.log(ok)
+        setGetWorkspace(ok)
+    },[id]
+  )
+
+  if (isLoading) {
+    return <Spinner />
   }
+
+  if( !get_workspace_ok){
+    return <ErrorComponent error={
+      {message: 'Workspace not found'}
+    }
+    />
+  }
+
+  if (!workspace === null && get_workspace_ok === null){
+    return <Spinner />
+  } 
 
   return (
     <div className='workspace-component'>
