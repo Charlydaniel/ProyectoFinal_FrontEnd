@@ -30,24 +30,32 @@ export default function WorkspaceItem({nombre,imagen,id}){
 
     useEffect(()=>{
         if(gotoNext){
+                    if(id>0){
                         navigate('/api/workspaces/'+id)
+                    }
+                    else{
+                        navigate('/api/workspaces/create/workspace')
+                    }
+                  
                     }},
                 [gotoNext]
             )
-  
-  useEffect(()=>{
-    const fetchData=async () =>{
-      try{
-            const {status,message,ok,data} = await sendRequest(() => getMembers(id))
-            setMembers(data)
-          }
-      catch(err){
 
-      }
+    useEffect(()=>{
+        const fetchData=async () =>{
+        try{
+           
+                    const {status,message,ok,data} = await sendRequest(() => getMembers(id))
+                
+                setMembers(data)
+            }
+        catch(err){
 
-    }
-    fetchData()
-  },[]) 
+        }
+
+        }
+        fetchData()
+    },[]) 
 
 
   if(error){
@@ -72,29 +80,30 @@ export default function WorkspaceItem({nombre,imagen,id}){
                     <p className="workspace-item-name">{nombre}</p>
                     <div className='workspace-members'>
                     <div className='workspaces-members-imgs'>
-                        { members && members.length > 0 
-                        ? (
-                                members.map((member) => (
-                                    <img 
-                                    key={member.id} 
-                                    className="workspace-members-img" 
-                                    src={member.imagen_avatar} 
-                                    alt={member.nombre || "Miembro"} 
-                                    />
-                                ))
-                                )
-                            : (
-                                <div className='workspace-members-cant'>Sin miembros</div>
-                                )
-                        }
-                    </div>
+
                         {
-                            members.length > 1
-                            ?
+                        members.length > 0 ? (
+                            members.map((member) => (
+                            <img 
+                                key={member.id} 
+                                className="workspace-members-img" 
+                                src={member.imagen_avatar} 
+                                alt={member.nombre || "Miembro"} 
+                            />
+                            ))
+                        ) 
+                        : id === 0 ? (
+                            <div className='workspace-members-cant'>Crea un nuevo workspace</div>
+                        ) 
+                        : members.length !== 1 ? (
                             <p className='workspace-members-cant'>{members.length} miembros</p>
-                            :
+                        ) 
+                        : (
                             <p className='workspace-members-cant'>{members.length} miembro</p>
+                        )
                         }
+
+                    </div>
                     </div>
                 </div>
                 <div onClick={onSelectWorkspaces} className='workspace-goto'>

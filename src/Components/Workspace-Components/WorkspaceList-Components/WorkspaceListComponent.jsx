@@ -54,6 +54,7 @@ export default function WorkspaceListComponent() {
                 id={workspace.id}
               />
             </div>
+            
             )
           )
         ) 
@@ -61,6 +62,11 @@ export default function WorkspaceListComponent() {
         (
           <p>No hay workspaces disponibles.</p>
         )}
+        <WorkspaceItem
+        nombre='Nuevo Workspace'
+        imagen=''
+        id={0}
+      />
       </ul>
     </div>
   )

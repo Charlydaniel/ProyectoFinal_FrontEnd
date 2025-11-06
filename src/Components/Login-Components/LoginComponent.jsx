@@ -14,7 +14,7 @@ import { COMPONENTS } from '../../constants/commonComponents'
 
 export default function LoguinComponent({isRegister}) {
 
-    const { isLoading,url_register } = useContext(LoginContext)
+    const { isLoading,url_register,user_data,setUserData} = useContext(LoginContext)
     const navigate = useNavigate()
     
 
@@ -37,6 +37,7 @@ export default function LoguinComponent({isRegister}) {
     const onLogin = (form_state) => {
 
         sendRequest(() => login(form_state[FORM_FIELDS.EMAIL], form_state[FORM_FIELDS.PASSWORD]))
+        
     }
      const onRegister = (form_state) => {
             sendRequest(() => register(form_state[FORM_FIELDS.NAME], form_state[FORM_FIELDS.EMAIL], form_state[FORM_FIELDS.PASSWORD]))
@@ -48,6 +49,7 @@ export default function LoguinComponent({isRegister}) {
             if (response && response.ok) {
                 if(!isRegister){
                     localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.authorization_token)
+                    setUserData(response.data)
                     navigate('/home')
                 }
                 else{

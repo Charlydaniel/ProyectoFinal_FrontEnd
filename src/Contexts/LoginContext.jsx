@@ -5,7 +5,9 @@ export const LoginContext = createContext({ isLoading: true });
 
 const LoginProvider = ({ children }) => {
 
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true)
+  const [user_data,setUserData] = useState([])
+  
   const url_register=`/register`
   
   useEffect(() => {
@@ -17,7 +19,7 @@ const LoginProvider = ({ children }) => {
   }, []);
 
   return (
-    <LoginContext.Provider value={{ isLoading,url_register}}>
+    <LoginContext.Provider value={{ isLoading,url_register,user_data,setUserData}}>
       {children}
     </LoginContext.Provider>
   );
