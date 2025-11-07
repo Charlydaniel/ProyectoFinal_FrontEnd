@@ -13,6 +13,8 @@ import ErrorComponent from './Components/Error-components/ErrorComponent'
 import VerifyEmailComponent from './Components/Verify-Email-components/VerifyEmail'
 import { register } from './services/authService'
 import WorkspaceCompoenent from './Components/Workspace-Components/Workspace-components/WorkspaceComponent'
+import CreateWorkspaceComponent from './Components/Workspace-Components/Workspace-new-components/CreateWorkspaceComponent'
+import CreateWorkspaceBackground from './Components/Workspace-Components/Workspace-new-components/CreateWorkspaceBackground'
 
 
 
@@ -23,11 +25,13 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    /*Antes de ir a la Home pasa por el midleware <AuthMidleware/>*/
     <div>
 
         <Routes>
-
+        <Route
+          path='/api/workspaces/create/workspace/:step'
+          element={<CreateWorkspaceBackground />}
+        />
         <Route
           path='/api/workspaces/:workspace_id'
           element={<WorkspaceCompoenent />}

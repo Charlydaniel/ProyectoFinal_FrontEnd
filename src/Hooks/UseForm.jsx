@@ -1,10 +1,7 @@
 
 import { useState } from "react"
 
-const useForm = ({
-    initial_form_state,
-    onSubmit
-}) => {
+const useForm = ({initial_form_state,onSubmit}) => {
 
     const [form_state, setFormState] = useState(initial_form_state)
 

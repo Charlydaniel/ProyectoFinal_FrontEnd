@@ -34,7 +34,7 @@ export default function WorkspaceItem({nombre,imagen,id}){
                         navigate('/api/workspaces/'+id)
                     }
                     else{
-                        navigate('/api/workspaces/create/workspace')
+                        navigate('/api/workspaces/create/workspace/1')
                     }
                   
                     }},

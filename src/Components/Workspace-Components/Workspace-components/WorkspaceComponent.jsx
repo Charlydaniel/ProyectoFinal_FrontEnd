@@ -18,9 +18,8 @@ import ErrorComponent from '../../Error-components/ErrorComponent'
 export default function WorkspaceCompoenent() {
 
   const { isLoading } = useContext(LoginContext)
-  const {response, ok, message, sendRequest } = useFetch()
+  const {response, ok, message,error, sendRequest } = useFetch()
   const [workspace, setWorkspace] = useState(null)
-  const [get_workspace_ok,setGetWorkspace]=useState(false)
 
   const { workspace_id } = useParams()
   const id = Number(workspace_id)
@@ -41,18 +40,14 @@ export default function WorkspaceCompoenent() {
     fetchData()
   }, [id]);
 
-  useEffect(
-    ()=>{
-      console.log(ok)
-        setGetWorkspace(ok)
-    },[id]
-  )
 
+
+  
   if (isLoading) {
     return <Spinner />
   }
 
-  if( !get_workspace_ok){
+  if(!isLoading && error){
     return <ErrorComponent error={
       {message: 'Workspace not found'}
     }
