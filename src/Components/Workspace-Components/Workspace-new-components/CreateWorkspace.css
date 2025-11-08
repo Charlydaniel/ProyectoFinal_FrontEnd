@@ -7,6 +7,79 @@
     box-sizing: border-box;
     font-family: "Roboto", sans-serif;
 }
+
+
+.member-button{
+    width: auto;
+    height: 25px;
+    padding: 5px 0;
+}
+.mail-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:5px;
+    max-width: 100%;
+    height: 120px;
+    background-color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border:#532755 1px solid;
+    border-radius: 5px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* ancho del scrollbar */
+.mail-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* fondo de la barra */
+.mail-container::-webkit-scrollbar-track {
+  background: #f1f1f1;    
+  border-radius: 8px;
+}
+
+/* parte que se mueve (thumb) */
+.mail-container::-webkit-scrollbar-thumb {
+  background-color:#532755;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+/* cuando pasás el mouse encima */
+.mail-container::-webkit-scrollbar-thumb:hover {
+  background-color:#532755;
+}
+
+
+.custom-textarea {
+  width: 100%;
+  height: 100px;
+  padding: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  resize: none;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.submit-area{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.mail-button{
+    position: absolute;
+    left: 12px;
+    background-color: #f8e7fa;
+    width: auto;
+    padding: 5px;
+}
+.custom-textarea:focus{
+  box-shadow: 0 0 0 1px #6d97e4;
+  outline: none;
+}
 .--red{
     color: red;
 }
@@ -14,7 +87,10 @@
     background-color: white;
     padding-right: 10px;
     border-radius: 0 10px 10px 0;
+    width: 100%;
 }
+
+
 .right-container-sup{
     display: flex;
     height: 100px;
