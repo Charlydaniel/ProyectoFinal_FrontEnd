@@ -8,14 +8,21 @@ import ImageUploader from '../../Image-Add-Components/ImageAddComponent'
 import useFile from '../../../Hooks/UseFile'
 import { resizeImage, uploadImageToCloudinary } from '../../../services/cludinaryService.js'
 import { CreateWorkspace } from '../../../services/workspaceServices.js'
-
+import { inviteMembers } from '../../../services/memberServices.js'
+import { LoginContext } from '../../../Contexts/LoginContext.jsx'
+import ErrorComponent from '../../Error-components/ErrorComponent.jsx'
 
 export default function CreateWorkspaceComponent() {
 
     const [current_field, setCurrentField] = useState('')
     const [ismail, setIsMail] = useState(false)
+    const [wp_created,setCreated]=useState(null)
+    const [issending,setSending]=useState(false)
+
     const { image: localimage, previewUrl, uploaded, 
         setUploaded, setLoading, handleFileChange, resetFile }= useFile()
+    const { isLoading,url_register,user_data,setUserData}=useContext(LoginContext)
+    
     const { name, user, members, image,
         setImageUrl, setMembers, setUser, setName } = useContext(CreateWorkspaceContext)
 
@@ -25,7 +32,6 @@ export default function CreateWorkspaceComponent() {
     const max_length = 30
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const location = useLocation();
-
 
 
     const FORM_FIELDS =
@@ -100,23 +106,74 @@ export default function CreateWorkspaceComponent() {
                         setUploaded(true)
                     }
                 } catch (err) {
-                    console.error("Error al subir imagen:", err)
+                    return(<ErrorComponent/>)
                 } finally {
                     setLoading(false)
                 }
-
-                CreateWorkspace(name,image,members)
-
             }   
             
         }
     }
 
+    useEffect(
+        ()=>{
+        const last_step=async()=>{
+            try{
+                if(uploaded){
+                    const response_wp = await CreateWorkspace(name,image)
+                    setCreated(response_wp)
+                }
+            }
+            catch{
+                return(
+                <ErrorComponent/>
+                )
+            }
+            }
+        last_step()
+        },[uploaded]
+    )
+        
+    useEffect(
+        ()=>{
+        const invite=async()=>{
+
+                if(uploaded){
+
+                    const workspace_created_id= wp_created.workspace_id
+                    const inviter_email=user_data.email
+                    const response_mem = await inviteMembers(workspace_created_id,members,inviter_email)
+
+                    if(response){
+                        setSending(true)
+                    }
+                    
+                }
+            }
+        invite()
+        },[wp_created]
+        )
+
+        useEffect(
+            ()=>{
+                if(issending){
+                    navigate('/api/workspaces/'+workspace_created_id) 
+                }
+            },[issending]
+        )
+
+        issending
+    useEffect(
+        ()=>{
+
+        },[image]
+    )
     useEffect(() => {
             setIsMail(false);
             form_state["input-data"] = ''; 
         
-    }, [location]);
+    }, [location]
+    );
 
     const deleteMail = (email_todelete) => {
         setMembers(prev => prev.filter(member => member !== email_todelete))
@@ -131,7 +188,8 @@ export default function CreateWorkspaceComponent() {
         onSubmit: onData
     })
 
-    useEffect(() => {
+    useEffect(
+        () => {
         if (FORM_FIELDS[step]) {
             setCurrentField(FORM_FIELDS[step])
         }

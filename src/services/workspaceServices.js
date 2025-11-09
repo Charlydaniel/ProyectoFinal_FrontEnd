@@ -8,13 +8,13 @@ const WORKSPACE_URL={
     CREATE_WORKSPACE:'/api/workspaces/new_workspace'
 }
 
-export async function CreateWorkspace(name, image, members) {
+export async function CreateWorkspace(name, image) {
 
     const workspace = {
         name,
-        image,
-        members
+        image
     }
+  
     const response_http = await fetch(
         `${ENVIRONMENT.URL_API}${WORKSPACE_URL.CREATE_WORKSPACE}`,
         {
@@ -28,12 +28,11 @@ export async function CreateWorkspace(name, image, members) {
     )
 
     const response_data = await response_http.json()
-
     if (!response_data.ok){
         throw new Error(response_data.message)
     }
 
-    return response_data
+    return response_data 
 }
 export const getWorkspaceList= async ()=>{
 

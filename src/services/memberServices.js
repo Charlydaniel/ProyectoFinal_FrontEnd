@@ -5,7 +5,7 @@ import LOCAL_STORAGE_KEYS from "../constants/localStorage";
 
 const MEMBER_URL={
     GET_BY_WORKSPACE:'/api/workspace_member/get_by_workspaces/get_members',
-    INVITE:'/:workspace_id/invite'
+    INVITE:'/invite/:workspace_id'
 }
 
 export async function getMembers(workspace_id) {
@@ -35,15 +35,17 @@ export async function getMembers(workspace_id) {
     return response_data
 }
 
-export async function inviteMembers({workspace_id,members}){
+export async function inviteMembers({workspace_id,members,email}){
 
     const invite_data={
         workspace_id,
-        members
+        members,
+        email
     }
 
+    console.log('INVITE DATA:',invite_data)
     const response_http = await fetch(
-        `${ENVIRONMENT.URL_API}${MEMBER_URL.INVITE}`,
+        `${ENVIRONMENT.URL_API}${MEMBER_URL.INVITE}${workspace_id}`,
         {
             method: HTTP_METHODS.GET,
             headers:{
@@ -61,6 +63,6 @@ export async function inviteMembers({workspace_id,members}){
         throw new Error(response_data.message);
     }
 
-    return response_data
+    return response_data 
 
 }

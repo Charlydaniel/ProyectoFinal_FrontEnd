@@ -20,6 +20,7 @@ export default function WorkspaceCompoenent() {
   const { isLoading } = useContext(LoginContext)
   const {response, ok, message,error, sendRequest } = useFetch()
   const [workspace, setWorkspace] = useState(null)
+  const [get_workspace_ok,setGetWorkspace]=useState(false)
 
   const { workspace_id } = useParams()
   const id = Number(workspace_id)
