@@ -1,9 +1,10 @@
 
 import { useState } from "react"
 
-const useForm = ({initial_form_state,onSubmit}) => {
+const useForm = ({initial_form_state,onSubmit,button_status}) => {
 
     const [form_state, setFormState] = useState(initial_form_state)
+    const [disabledButton,setDisabledButton]=useState(button_status)
 
     const handleInputChange = (event) => {
         setFormState(
@@ -13,6 +14,9 @@ const useForm = ({initial_form_state,onSubmit}) => {
                 return { ...current_form_state, [field_name]: field_value }
             }
         )
+        if(event.target.value.length >0){
+            setDisabledButton(false)
+        }
     }
 
     const handleSubmit = (event) => {
@@ -23,6 +27,7 @@ const useForm = ({initial_form_state,onSubmit}) => {
     }
     
     return {
+        disabledButton,
         form_state,
         handleInputChange,
         handleSubmit

@@ -4,25 +4,29 @@ import LOCAL_STORAGE_KEYS from "../constants/localStorage";
 
 const WORKSPACE_URL={
     GET:'/api/workspaces/',
-    GET_BY_MEMBERS:'/api/workspace_member/get_by_member/get_workspaces'
+    GET_BY_MEMBERS:'/api/workspace_member/get_by_member/get_workspaces',
+    CREATE_WORKSPACE:'/api/workspaces/new_workspace'
 }
 
-export async function CreateWorkspace(name, image) {
+export async function CreateWorkspace(name, image, members) {
 
     const workspace = {
         name,
-        image
+        image,
+        members
     }
     const response_http = await fetch(
-        `${ENVIRONMENT.URL_API}/api/workspaces/new_workspace`,
+        `${ENVIRONMENT.URL_API}${WORKSPACE_URL.CREATE_WORKSPACE}`,
         {
             method: HTTP_METHODS.POST,
             headers: {
-                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
+                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
+                'Authorization':'Bearer ' + localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN)
             },
             body: JSON.stringify(workspace)
         }
     )
+
     const response_data = await response_http.json()
 
     if (!response_data.ok){
@@ -66,7 +70,6 @@ export default async function getWorkspace(workspace_id){
     )
     const response_data= await response_http.json()
 
-    console.warn(response_data)
     if(!response_http.ok){
         throw new Error(response_data.message || 'Error al buscar el workspace')
 

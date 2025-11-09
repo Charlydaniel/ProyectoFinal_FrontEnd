@@ -27,7 +27,6 @@ export default function WorkspaceItem({nombre,imagen,id}){
         setGoTo(true)
     }
 
-
     useEffect(()=>{
         if(gotoNext){
                     if(id>0){
@@ -36,7 +35,6 @@ export default function WorkspaceItem({nombre,imagen,id}){
                     else{
                         navigate('/api/workspaces/create/workspace/1')
                     }
-                  
                     }},
                 [gotoNext]
             )

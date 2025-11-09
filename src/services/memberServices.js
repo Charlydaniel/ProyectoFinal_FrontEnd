@@ -4,7 +4,8 @@ import LOCAL_STORAGE_KEYS from "../constants/localStorage";
 
 
 const MEMBER_URL={
-    GET_BY_WORKSPACE:'/api/workspace_member/get_by_workspaces/get_members'
+    GET_BY_WORKSPACE:'/api/workspace_member/get_by_workspaces/get_members',
+    INVITE:'/:workspace_id/invite'
 }
 
 export async function getMembers(workspace_id) {
@@ -16,7 +17,7 @@ export async function getMembers(workspace_id) {
     const response_http = await fetch(
         `${ENVIRONMENT.URL_API}${MEMBER_URL.GET_BY_WORKSPACE}`,
         {
-            method: HTTP_METHODS.POST,
+            method: HTTP_METHODS.GET,
             headers:{
                 'Authorization': 'Bearer ' +
                     localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN),
@@ -32,4 +33,34 @@ export async function getMembers(workspace_id) {
     }
 
     return response_data
+}
+
+export async function inviteMembers({workspace_id,members}){
+
+    const invite_data={
+        workspace_id,
+        members
+    }
+
+    const response_http = await fetch(
+        `${ENVIRONMENT.URL_API}${MEMBER_URL.INVITE}`,
+        {
+            method: HTTP_METHODS.GET,
+            headers:{
+                'Authorization': 'Bearer ' +
+                    localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN),
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
+                },
+            body:JSON.stringify(invite_data)
+        }
+    )
+    const response_data = await response_http.json()
+
+    console.log(response_data.data)
+    if (!response_data.ok) {
+        throw new Error(response_data.message);
+    }
+
+    return response_data
+
 }
