@@ -1,18 +1,21 @@
 import './workspaceComponent.css'
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa6"
-import { RiHistoryLine, RiHome3Fill } from "react-icons/ri"
-import { IoSearchOutline } from "react-icons/io5"
+import Spinner from '../../Spinner/Spinner'
+import useFetch from '../../../Hooks/UseFetch'
+import { useParams } from 'react-router-dom'
+import getWorkspace, { deleteWorkspace } from '../../../services/workspaceServices'
+import { LoginContext } from '../../../Contexts/LoginContext'
+import { RiDeleteBin6Fill } from "react-icons/ri"
 import { GoQuestion } from "react-icons/go"
 import { PiBellThin } from "react-icons/pi"
 import { ImFilesEmpty } from "react-icons/im"
 import { LuMessagesSquare } from "react-icons/lu"
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa6"
+import { RiHistoryLine, RiHome3Fill } from "react-icons/ri"
+import { IoSearchOutline } from "react-icons/io5"
 import { useContext, useEffect, useState } from 'react'
-import Spinner from '../../Spinner/Spinner'
-import useFetch from '../../../Hooks/UseFetch'
-import { useParams } from 'react-router-dom'
-import getWorkspace from '../../../services/workspaceServices'
-import { LoginContext } from '../../../Contexts/LoginContext'
 import ErrorComponent from '../../Error-components/ErrorComponent'
+import useForm from '../../../Hooks/UseForm'
+
 
 
 export default function WorkspaceCompoenent() {
@@ -21,15 +24,19 @@ export default function WorkspaceCompoenent() {
   const {response, ok, message,error, sendRequest } = useFetch()
   const [workspace, setWorkspace] = useState(null)
   const [get_workspace_ok,setGetWorkspace]=useState(false)
-
   const { workspace_id } = useParams()
-  const id = Number(workspace_id)
+  
 
+    const onDelete = (workspace_id) => {
+      sendRequest(() => deleteWorkspace(workspace_id))
+    }
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
-        const result = await sendRequest(() => getWorkspace(id))
+          const id = Number(workspace_id)
+          const result = await sendRequest(() => getWorkspace(id))
         if (result.data.workspace) {
           setWorkspace(result.data.workspace)
           setGetWorkspace(result.ok)
@@ -37,13 +44,11 @@ export default function WorkspaceCompoenent() {
       } catch (err) {
         console.warn(err);
       }
-    };
+    }
     fetchData()
-  }, [id]);
+  }, [workspace_id])
 
 
-
-  
   if (isLoading) {
     return <Spinner />
   }
@@ -133,14 +138,11 @@ export default function WorkspaceCompoenent() {
           <div className='nav-inf-section'>
             <button className='workspace-icon-left-nav-more'>+</button>
           </div>
-
-          <div className='workspace-nav-left-button'>
-            <img
-              className='workspace-icono'
-              src="https://randomuser.me/api/portraits/women/86.jpg"
-              alt="Profile"
-            />
-          </div>
+              <div className='workspace-nav-left-button'>
+                <RiDeleteBin6Fill
+                onSelect={onDelete}
+                 className='workspace-icon-left-nav' />
+              </div>
         </nav>
 
         <section></section>

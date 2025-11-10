@@ -18,6 +18,11 @@ export default function HomeComponent() {
 
   const navigate=useNavigate()
 
+  const handleGoto=()=>{
+        navigate('/api/workspaces/create/workspace/1')
+  }
+
+
   useEffect(
               () => {
                     const fethcData=async()=>
@@ -40,7 +45,8 @@ export default function HomeComponent() {
 
     const handleLogout = () => {localStorage.removeItem("auth_token")
                                 navigate("/login")   
-                              }
+    }
+
 
 
   if ( loading || initialLoading || isLoading) {
@@ -94,7 +100,7 @@ export default function HomeComponent() {
                 <div className="footer-slac-uses">
                   <img className="footer-slac-uses-img" src="https://a.slack-edge.com/bv1-13/get-started-workspaces-icon-88e0cb1.svg" alt="" />
                   <span className="footer-slac-uses-text">¿Quieres usar Slack con un equipo distinto?</span>
-                  <button className="footer-button-workspaces">Crear otro espacio de trabajo</button>
+                  <button onClick={handleGoto} className="footer-button-workspaces">Crear otro espacio de trabajo</button>
                 </div>
               </footer>
       </div>

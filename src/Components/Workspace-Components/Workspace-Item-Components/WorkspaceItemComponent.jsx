@@ -5,6 +5,7 @@ import ErrorComponent from '../../Error-components/ErrorComponent';
 import useFetch from '../../../Hooks/UseFetch';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
+import { RiDeleteBinLine } from "react-icons/ri";
 
 
 
@@ -63,6 +64,7 @@ export default function WorkspaceItem({nombre,imagen,id}){
     return(
         
         <div className='workspace-item-container'>
+            
             <div className="workspace-item-text">
                 {
                     imagen?

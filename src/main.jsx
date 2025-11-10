@@ -8,13 +8,13 @@ import CreateWorkspaceProvider from './Contexts/CreateWorkspaceContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <CreateWorkspaceProvider>
-      <LoginProvider>
+    <LoginProvider>
+      <CreateWorkspaceProvider>
         <HomeProvider>
           <App />
         </HomeProvider>
-      </LoginProvider>
-    </CreateWorkspaceProvider>
+      </CreateWorkspaceProvider>
+    </LoginProvider>
   </BrowserRouter>
 
 

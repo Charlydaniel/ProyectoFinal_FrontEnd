@@ -2,18 +2,20 @@ import { useState, useEffect } from "react";
 
 export default function useFile() {
 
-    const [image, setImage] = useState(null);
+    const [image_file, setImage] = useState(null);
     const [previewUrl, setPreviewUrl] = useState("");
     const [uploaded, setUploaded] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
 
-    const file = e.target.files?.[0];
             setImage(file);
             setPreviewUrl(URL.createObjectURL(file));
 
     }; 
+
+
 
     useEffect(() => {
         return () => {
@@ -22,7 +24,7 @@ export default function useFile() {
     }, [previewUrl]);
 
     return {
-        image,
+        image_file,
         previewUrl,
         uploaded,
         loading,

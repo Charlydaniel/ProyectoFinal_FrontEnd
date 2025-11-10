@@ -11,6 +11,8 @@
     opacity: 0.4;
     pointer-events: none;    
 }
+
+
 :root{
     --dark_color:#401141;
     --lightercolor: #a087a0;
@@ -92,6 +94,7 @@
     width: 220px;
 }
 .workspace-search-button{
+    right: 10px;
     position: absolute;
     color: white;
 }

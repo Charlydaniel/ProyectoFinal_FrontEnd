@@ -1,13 +1,13 @@
 import '../Workspace-components/WorkspaceComponent.css'
 import { RiHome6Line } from "react-icons/ri";
-import CreateWorkspaceComponent from './CreateWorkspaceComponent';
+import DeleteWorkspace from './DeleteWorkspaceComponent';
+import '../Workspace-components/WorkspaceComponent.css'
 
 
-export default function CreateWorkspaceBackground() {
+export default function DeleteComponentBackground() {
 
 
-  
-  return (
+return (
     <div className='workspace-component'>
       <header className="workspaces-header">        
       </header>
@@ -29,7 +29,7 @@ export default function CreateWorkspaceBackground() {
           </div>
         </nav>
         <div className='create-container'>
-          <CreateWorkspaceComponent />
+          <DeleteWorkspace />
         </div>
       </div>
     </div>

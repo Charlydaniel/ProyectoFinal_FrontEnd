@@ -7,7 +7,7 @@ export default function ImageUploader({ canUpload, onFileReady }) {
 
   
   const {
-    image,
+    image_file,
     previewUrl,
     uploaded,
     loading,
@@ -15,10 +15,10 @@ export default function ImageUploader({ canUpload, onFileReady }) {
   } = useFile();
 
   useEffect(() => {
-  if (onFileReady && image && previewUrl) {
-    onFileReady({ file: image, previewUrl });
+  if (onFileReady && image_file && previewUrl) {
+    onFileReady({ file: image_file, previewUrl });
   }
-}, [image, previewUrl, onFileReady]);
+}, [image_file, previewUrl, onFileReady]);
 
   return (
     <div className="add-image-container">
@@ -38,7 +38,7 @@ export default function ImageUploader({ canUpload, onFileReady }) {
 
         <label htmlFor="fileInput" className="file-label">
           <RiFolderImageLine size={20} />
-          <span>{image ? "Cambiar imagen" : "Seleccionar"}</span>
+          <span>{image_file ? "Cambiar imagen" : "Seleccionar"}</span>
         </label>
 
         {previewUrl && (
