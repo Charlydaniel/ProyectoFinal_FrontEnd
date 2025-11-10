@@ -1,7 +1,7 @@
 import './workspaceComponent.css'
 import Spinner from '../../Spinner/Spinner'
 import useFetch from '../../../Hooks/UseFetch'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import getWorkspace, { deleteWorkspace } from '../../../services/workspaceServices'
 import { LoginContext } from '../../../Contexts/LoginContext'
 import { RiDeleteBin6Fill } from "react-icons/ri"
@@ -14,29 +14,30 @@ import { RiHistoryLine, RiHome3Fill } from "react-icons/ri"
 import { IoSearchOutline } from "react-icons/io5"
 import { useContext, useEffect, useState } from 'react'
 import ErrorComponent from '../../Error-components/ErrorComponent'
-import useForm from '../../../Hooks/UseForm'
 
 
 
 export default function WorkspaceCompoenent() {
 
   const { isLoading } = useContext(LoginContext)
-  const {response, ok, message,error, sendRequest } = useFetch()
+  const { response, ok, message, error, sendRequest } = useFetch()
   const [workspace, setWorkspace] = useState(null)
-  const [get_workspace_ok,setGetWorkspace]=useState(false)
+  const [get_workspace_ok, setGetWorkspace] = useState(false)
   const { workspace_id } = useParams()
-  
 
-    const onDelete = (workspace_id) => {
-      sendRequest(() => deleteWorkspace(workspace_id))
-    }
+  const navigate = useNavigate()
+
+
+  const onDelete = () => {
+    navigate('/api/workspaces/delete/'+workspace.id)
+  }
 
   useEffect(() => {
 
     const fetchData = async () => {
       try {
-          const id = Number(workspace_id)
-          const result = await sendRequest(() => getWorkspace(id))
+        const id = Number(workspace_id)
+        const result = await sendRequest(() => getWorkspace(id))
         if (result.data.workspace) {
           setWorkspace(result.data.workspace)
           setGetWorkspace(result.ok)
@@ -53,18 +54,19 @@ export default function WorkspaceCompoenent() {
     return <Spinner />
   }
 
-  if(!isLoading && error){
+  if (!isLoading && error) {
     return <ErrorComponent error={
-      {message: 'Workspace not found'}
+      { message: 'Workspace not found' }
     }
     />
   }
 
-  if (!workspace === null && get_workspace_ok === null){
+  if (!workspace === null && get_workspace_ok === null) {
     return <Spinner />
-  } 
+  }
 
   return (
+
     <div className='workspace-component'>
       <header className="workspaces-header">
         <nav className='workspaces-header-nav'>
@@ -78,7 +80,7 @@ export default function WorkspaceCompoenent() {
           </div>
           <div className='workspace-search-container'>
             <input
-              placeholder={`Buscar en ${workspace?.nombre || 'Buscar..'}`} 
+              placeholder={`Buscar en ${workspace?.nombre || 'Buscar..'}`}
               className="workspace-search"
               type="text"
             />
@@ -92,15 +94,16 @@ export default function WorkspaceCompoenent() {
 
       <div className='workspace-body'>
         <nav className="workspace-nav-left">
-          <div className='workspace-nav-left-button'>
-            <img
-              className='workspace-icono'
-              src={workspace?.img_workspace}
-              alt="Profile"
-            />
-          </div>
-
           <div className='workspace-nav-left-buttons-container'>
+
+            <div className='workspace-nav-left-button --profile'>
+              <img
+                className='workspace-icono'
+                src={workspace?.img_workspace}
+                alt="Profile"
+              />
+            </div>
+
             <div className='button-nav-left'>
               <div className='workspace-nav-left-button --white'>
                 <RiHome3Fill className='workspace-icon-left-nav' />
@@ -128,25 +131,31 @@ export default function WorkspaceCompoenent() {
               </div>
               <span className='workspace-icon-left-nav-span'>Archivos</span>
             </div>
-
+          </div>
+          <div className='workspace-nav-left-inf-container'>
             <div className='workspace-nav-left-button-text'>
-              <button className='workspace-icon-left-nav-text-button'>...</button>
-              <span className='workspace-icon-left-nav-text'>Más</span>
+              <div className='nav-inf-section'>
+                <button className='workspace-icon-left-nav-text-button'>...</button>
+              </div>
+              <div className='nav-inf-section'>
+                <button className='workspace-icon-left-nav-more'>+</button>
+              </div>
+              <div className='nav-inf-section'>
+                <RiDeleteBin6Fill
+                  onClick={onDelete}
+                  className='workspace-icon-left-nav'
+                  style={{ cursor: 'pointer' }}
+                />
+              </div>
             </div>
           </div>
 
-          <div className='nav-inf-section'>
-            <button className='workspace-icon-left-nav-more'>+</button>
-          </div>
-              <div className='workspace-nav-left-button'>
-                <RiDeleteBin6Fill
-                onSelect={onDelete}
-                 className='workspace-icon-left-nav' />
-              </div>
         </nav>
 
-        <section></section>
+        <div className='workspace-chats'>
+
+        </div>
       </div>
     </div>
-  );
+  )
 }

@@ -15,10 +15,12 @@ export async function getMembers(workspace_id) {
         workspace_id
     }
 
+    console.log('SE ENVIA: ',workspace)
+
     const response_http = await fetch(
         `${ENVIRONMENT.URL_API}${MEMBER_URL.GET_BY_WORKSPACE}`,
         {
-            method: HTTP_METHODS.GET,
+            method: HTTP_METHODS.POST,
             headers:{
                 'Authorization': 'Bearer ' +
                     localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN),
@@ -29,13 +31,13 @@ export async function getMembers(workspace_id) {
     )
     const response_data = await response_http.json()
 
+
     if (!response_data.ok) {
         throw new Error(response_data.message);
     }
-
+     console.log('SE OBTIENE: ',response_data)
     return response_data
 }
-
 export async function inviteMembers(workspace_id,members,email){
 
     const invite_data={
@@ -43,9 +45,7 @@ export async function inviteMembers(workspace_id,members,email){
         members,
         email
     }
-    console.log('INVITE START', invite_data)
 
-    console.log(`${ENVIRONMENT.URL_API}${MEMBER_URL.INVITE}${workspace_id}`)
     const response_http = await fetch(
         `${ENVIRONMENT.URL_API}${MEMBER_URL.INVITE}${workspace_id}`,
         {

@@ -8,7 +8,7 @@ export default function DeleteComponentBackground() {
 
 
 return (
-    <div className='workspace-component'>
+    <div className='delete-workspace-component'>
       <header className="workspaces-header">        
       </header>
       <div className='workspace-body'>

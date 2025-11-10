@@ -5,7 +5,7 @@ import { COMPONENTS } from '../../constants/commonComponents';
 
 export default function ErrorComponent({ error }) {
 
-    const [isOpen, setIsOpen] = useState(false);
+const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -56,7 +56,7 @@ export default function ErrorComponent({ error }) {
                     </nav>
                 )}
             </header>
-            <div className='error-body'>
+            <div className='error-body --complete'>
                 <div className="error-container">
                     <div className='error-icon'>
                         <FiAlertTriangle />

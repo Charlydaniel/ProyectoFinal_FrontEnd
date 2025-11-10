@@ -1,24 +1,27 @@
-import {  useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './deleteWorkspace.css'
 import { useEffect, useState } from 'react'
-import getWorkspace from '../../../services/workspaceServices'
+import getWorkspace, { deleteWorkspace } from '../../../services/workspaceServices'
 import useFetch from '../../../Hooks/UseFetch'
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { GiReturnArrow } from "react-icons/gi";
+import ErrorMessageComponent from '../../Error-components/ErrorMessageComponent.jsx'
+import Spinner from  '../../Spinner/Spinner.jsx'
 
 export default function DeleteWorkspace() {
 
-    const { workspace_id } = useParams()
-    const [workspace,setWorkspace]=useState()
+  const { workspace_id } = useParams()
+  const [workspace, setWorkspace] = useState('')
+  const [deleted,setDelete] = useState(false)
+  const { sendRequest, loading, response, error } = useFetch()
+  const navigate = useNavigate()
 
-    const { sendRequest, loading, response, error } = useFetch()
-
-    const id = Number(workspace_id)
-    
- useEffect(() => {
+  useEffect(() => {
 
     const fetchData = async () => {
       try {
-          const id = Number(workspace_id)
-          const result = await sendRequest(() => getWorkspace(id))
+        const id = Number(workspace_id)
+        const result = await sendRequest(() => getWorkspace(id))
         if (result.data.workspace) {
           setWorkspace(result.data.workspace)
         }
@@ -30,10 +33,51 @@ export default function DeleteWorkspace() {
   }, [workspace_id])
 
 
-    return (
+    const onDelete = async () => {
+      try {
+        const result = await sendRequest(() => {deleteWorkspace(workspace.id)})
+        console.log(result)
+        navigate('/home')
+      } catch (err) {
+        console.warn(err);
+      }
+    }
 
-        <div className='workspace-component'>
-            <h1>¿ESTAS SEGURO DE ELIMINAR? <span className='nombre-workspace'>{workspace?.nombre}</span></h1>
-        </div>
-    )
+if(loading){
+  return <Spinner/>
+}
+
+
+  return (
+
+    <div className='delete-workspace-component'>
+
+          {!response
+            ?
+              (
+                <ErrorMessageComponent error={error}/>
+              )
+            :
+            (
+              <div className='container-delete-workspace'>
+                <h1 className='delete-workspace-titulo'>¿ESTAS SEGURO DE ELIMINAR?</h1>
+                <h1 className='delete-nombre-workspace'>{workspace?.nombre}</h1>
+                <div className='img-container'>
+                  <img src={workspace?.img_workspace} alt="" className='img-workspace' />
+                </div>
+                <section className='delete-workspace-buttons-section'>
+                  <button onClick={onDelete} >
+                    <RiDeleteBin6Fill className='delete-button-icons' />
+                    Eliminar
+                  </button>
+                  <button >
+                    <GiReturnArrow className='delete-button-icons' />
+                    Volver
+                  </button>
+                </section>
+              </div>
+            )
+          }
+    </div>
+  )
 }

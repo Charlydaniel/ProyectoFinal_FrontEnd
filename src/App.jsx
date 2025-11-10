@@ -13,7 +13,6 @@ import VerifyEmailComponent from './Components/Verify-Email-components/VerifyEma
 import WorkspaceCompoenent from './Components/Workspace-Components/Workspace-components/WorkspaceComponent'
 import CreateWorkspaceBackground from './Components/Workspace-Components/Workspace-new-components/CreateWorkspaceBackground'
 import ImageUploader from './Components/Image-Add-Components/ImageAddComponent'
-import DeleteWorkspace from './Components/Workspace-Components/Delete-workspace-components/DeleteWorkspaceComponent'
 import DeleteComponentBackground from './Components/Workspace-Components/Delete-workspace-components/DeleteComponentBackground'
 
 
@@ -26,9 +25,9 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div>
 
-        <Routes>
+
+       <Routes>
 
         <Route
           path='/api/workspaces/create/workspace/:step'
@@ -95,7 +94,7 @@ function App() {
               element={<ErrorComponent error={error_for_component}/>}
           />
       </Routes>
-    </div>
+
 
   )
 }

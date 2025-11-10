@@ -52,7 +52,7 @@ export default function HomeComponent() {
   if ( loading || initialLoading || isLoading) {
     return (
       <div>
-            <Spinner />;
+            <Spinner />
       </div>
     )
 

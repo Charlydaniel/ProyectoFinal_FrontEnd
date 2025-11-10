@@ -229,9 +229,7 @@
                 <div className="right-container">
                     <div className='right-container-sup'>
                     </div>
-                    <div className='email-data'>
-                        MAIL: {user_data}
-                    </div>
+
                     <div className='rigth-content'>
                         <div>
                             {`Passo ${step} de ${Object.keys(FORM_FIELDS).length}`}

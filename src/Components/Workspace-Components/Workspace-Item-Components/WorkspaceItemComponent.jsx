@@ -27,7 +27,7 @@ export default function WorkspaceItem({nombre,imagen,id}){
     const onSelectWorkspaces = ()=>{
         setGoTo(true)
     }
-
+    
     useEffect(()=>{
         if(gotoNext){
                     if(id>0){
@@ -43,18 +43,14 @@ export default function WorkspaceItem({nombre,imagen,id}){
     useEffect(()=>{
         const fetchData=async () =>{
         try{
-           
-                    const {status,message,ok,data} = await sendRequest(() => getMembers(id))
-                
+                 const {status,message,ok,data} = await sendRequest(() => getMembers(id))  
                 setMembers(data)
             }
         catch(err){
-
         }
-
         }
         fetchData()
-    },[]) 
+    },[id]) 
 
 
   if(error){

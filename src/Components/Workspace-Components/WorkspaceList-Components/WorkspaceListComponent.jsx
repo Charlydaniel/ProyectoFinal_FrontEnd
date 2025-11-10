@@ -4,6 +4,7 @@ import { getWorkspaceList } from "../../../services/workspaceServices"
 import WorkspaceItem from "../Workspace-Item-Components/WorkspaceItemComponent"
 import "./WorkspaceList.css"
 import ErrorComponent from "../../Error-components/ErrorComponent"
+import Spinner from "../../Spinner/Spinner"
 
 
 export default function WorkspaceListComponent() {
@@ -29,11 +30,15 @@ export default function WorkspaceListComponent() {
     
           setWorkspaces([]) 
       } 
-
     }
 
     fetchData()
   }, [])
+
+  if(loading){
+    return <Spinner/>
+  }
+
 
   if (error) {
       <ErrorComponent/>
@@ -43,7 +48,7 @@ export default function WorkspaceListComponent() {
     <div className="Workspace-list-body">
       <ul className="workspace-list">
         {
-          workspaces && workspaces.length > 0 ? 
+           workspaces?.length > 0 ? 
         (
           workspaces.map((workspace, clave) => 
             (

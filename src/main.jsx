@@ -16,7 +16,4 @@ createRoot(document.getElementById('root')).render(
       </CreateWorkspaceProvider>
     </LoginProvider>
   </BrowserRouter>
-
-
-
 )
