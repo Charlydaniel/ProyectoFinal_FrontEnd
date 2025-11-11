@@ -10,6 +10,7 @@
     import { CreateWorkspace } from '../../../services/workspaceServices.js'
     import { inviteMembers } from '../../../services/memberServices.js'
     import { LoginContext } from '../../../Contexts/LoginContext.jsx'
+import useFetch from '../../../Hooks/UseFetch.jsx'
 
 
     export default function CreateWorkspaceComponent() {
@@ -25,7 +26,9 @@
         
         const {new_workspace,name,members,user,image,setImageUrl,setName,setUser,setMembers
                 ,setNewWorkspace} = useContext(CreateWorkspaceContext)
-
+        
+        const { sendRequest, loading, response, error } = useFetch()
+    
         const { step } = useParams()
         const navigate = useNavigate()
         const min_length = 5
@@ -116,16 +119,19 @@
                     
                 }
         }
-
+        
         useEffect(
             ()=>{
             const last_step=async()=>{
                 try{
                     if(uploaded){
-                        const created_workspace=await CreateWorkspace(name,image)
-                        setNewWorkspace(created_workspace.workspace_id) 
-                        
-
+                        const created_workspace = useFetch(()=>CreateWorkspace(name,image))
+                        if(response){
+                            setNewWorkspace(created_workspace.workspace_id) 
+                        }
+                        else{
+                            console.log('Error fetching create Workspace')
+                        }
                     }
                 }
                 catch(error){
@@ -214,7 +220,7 @@
         )
 
 
-        if (!current_field) {
+        if (!current_field || loading) {
             return (
                 <div>
                     <Spinner />
@@ -278,7 +284,6 @@
                                                     {max_length - (form_state["input-data"] ? form_state["input-data"].length : 0)}
                                                 </span>
                                         )
-
                                         :
                                         <span className='right-data-span-max-text --red'>
                                             {max_length - (form_state["input-data"] ? form_state["input-data"].length : 0)}
@@ -297,7 +302,6 @@
                                         </div>
                                         :
                                         <div>
-
                                         </div>
                                 }
                             </div>

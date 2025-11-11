@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react';
+
+
+import { useEffect, useState,react } from 'react';
 import { getMembers } from '../../../services/memberServices';
 import './WorkspaceItem.css' 
 import ErrorComponent from '../../Error-components/ErrorComponent';
 import useFetch from '../../../Hooks/UseFetch';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
-import { RiDeleteBinLine } from "react-icons/ri";
 
 
 
-export default function WorkspaceItem({nombre,imagen,id}){
+
+export default function WorkspaceItem({nombre,imagen,id,filtrados}){
 
     const {loading, response, error, sendRequest } = useFetch();
-    const [members,setMembers]=useState([])
+    const [members,setMembersTeam]=useState([])
     const [gotoNext,setGoTo]=useState(false)
 
     const navigate=useNavigate()
+
 
     const getInitials = (nombre) => {
         if (!nombre) return "";
@@ -40,22 +43,26 @@ export default function WorkspaceItem({nombre,imagen,id}){
                 [gotoNext]
             )
 
-    useEffect(()=>{
-        const fetchData=async () =>{
-        try{
-                 const {status,message,ok,data} = await sendRequest(() => getMembers(id))  
-                setMembers(data)
-            }
-        catch(err){
-        }
-        }
-        fetchData()
-    },[id]) 
+  useEffect(()=>{
+
+          try{
+                 setMembersTeam(filtrados)
+                
+              }
+          catch(err){
+          }
+
+      },[filtrados]) 
 
 
   if(error){
     <ErrorComponent error={error}/>
   }
+
+    if (loading) {
+    return <Spinner />;
+  }
+  
 
     return(
         
@@ -76,28 +83,35 @@ export default function WorkspaceItem({nombre,imagen,id}){
                     <p className="workspace-item-name">{nombre}</p>
                     <div className='workspace-members'>
                     <div className='workspaces-members-imgs'>
-
                         {
-                        members.length > 0 ? (
-                            members.map((member) => (
+                          members?.length > 0 
+                          ?
+        
+
+                            members.map((members, clave) => (
                             <img 
-                                key={member.id} 
+                                key={clave} 
                                 className="workspace-members-img" 
-                                src={member.imagen_avatar} 
-                                alt={member.nombre || "Miembro"} 
+                                src={members.imagen} 
+                                alt={members.usuario_nombre || "Miembro"} 
                             />
                             ))
-                        ) 
-                        : id === 0 ? (
-                            <div className='workspace-members-cant'>Crea un nuevo workspace</div>
-                        ) 
-                        : members.length !== 1 ? (
-                            <p className='workspace-members-cant'>{members.length} miembros</p>
-                        ) 
-                        : (
-                            <p className='workspace-members-cant'>{members.length} miembro</p>
-                        )
-                        }
+                            
+
+                          :
+                          <></>
+                          }
+                          {
+                            id === 0 ? (
+                                <div className='workspace-members-cant'> Crea un nuevo workspace</div>
+                            ) 
+                            : members?.length !== 1 ? (
+                                <p className='workspace-members-cant'>{members.length} miembros</p>
+                            ) 
+                            : (
+                                <p className='workspace-members-cant'>{members?.length} miembro</p>
+                            )
+                          }
 
                     </div>
                     </div>

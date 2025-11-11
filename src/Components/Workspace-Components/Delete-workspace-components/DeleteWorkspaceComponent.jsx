@@ -33,6 +33,10 @@ export default function DeleteWorkspace() {
   }, [workspace_id])
 
 
+    const comeBack =()=>{
+      navigate('/home')
+    }
+
     const onDelete = async () => {
       try {
         const result = await sendRequest(() => {deleteWorkspace(workspace.id)})
@@ -70,7 +74,7 @@ if(loading){
                     <RiDeleteBin6Fill className='delete-button-icons' />
                     Eliminar
                   </button>
-                  <button >
+                  <button  onClick={comeBack}>
                     <GiReturnArrow className='delete-button-icons' />
                     Volver
                   </button>
